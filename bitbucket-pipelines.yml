@@ -1,0 +1,112 @@
+image: python:3.7.6
+caches:
+  - pip
+  - docker
+
+definitions:
+  steps:
+    - step: &setup-prod
+        name: "[PROD] Build and Tests"
+        script:
+          - export OTEST=true
+          - export OSOURCE=prod
+          - python3 -m pip install -r requirements.txt
+          - python3 -m pip install . | { grep -v "already satisfied" || :; }
+          - python3 setup.py sdist bdist_wheel
+          - sphinx-build -b html -W docs build/docs
+        artifacts:
+          - build/**
+          - dist/**
+    - step: &setup-dev
+        name: "[DEV] Build and Tests"
+        script:
+          - export OTEST=true
+          - export OSOURCE=dev
+          - python3 -m pip install -r requirements.txt
+          - python3 -m pip install . | { grep -v "already satisfied" || :; }
+          - python3 setup.py sdist bdist_wheel
+          - sphinx-build -b html -W docs build/docs
+        artifacts:
+          - build/**
+          - dist/**
+    - parallel: &tests-dev
+        - step:
+            image: painless/tox:multi
+            name: "[DEV] Test Python 3.7"
+            script:
+              - export OTEST=true
+              - export OSOURCE=dev
+              - tox -e py37 -- --color=yes --cov --cov-append --cov-report=term-missing --doctest-modules --ignore=tests/acceptance/steps --junitxml=tests/reports/unittests.xml --strict --verbose tests
+        - step:
+            image: painless/tox:multi
+            name: "[DEV] Test Python 3.8"
+            script:
+              - export OTEST=true
+              - export OSOURCE=dev
+              - tox -e py38 -- --color=yes --cov --cov-append --cov-report=term-missing --doctest-modules --ignore=tests/acceptance/steps --junitxml=tests/reports/unittests.xml --strict --verbose tests
+    - parallel: &tests-prod
+        - step:
+            image: painless/tox:multi
+            name: "[PROD] Test Python 3.7"
+            script:
+              - export OTEST=true
+              - export OSOURCE=prod
+              - tox -e py37 -- --color=yes --cov --cov-append --cov-report=term-missing --doctest-modules --ignore=tests/acceptance/steps --junitxml=tests/reports/unittests.xml --strict --verbose tests
+        - step:
+            image: painless/tox:multi
+            name: "[PROD] Python 3.8"
+            script:
+              - export OTEST=true
+              - export OSOURCE=prod
+              - tox -e py38 -- --color=yes --cov --cov-append --cov-report=term-missing --doctest-modules --ignore=tests/acceptance/steps --junitxml=tests/reports/unittests.xml --strict --verbose tests
+
+pipelines:
+  default:
+    - parallel: &checks
+        - step:
+            image: painless/tox:multi
+            name: Bandit
+            script:
+              - tox -e bandit || true
+        - step:
+            image: painless/tox:multi
+            name: Pylint
+            script:
+              - tox -e pylint -- otypes || true
+        - step:
+            image: painless/tox:multi
+            name: Flake8
+            script:
+              - tox -e flake8
+        - step:
+            image: painless/tox:multi
+            name: mypy
+            script:
+              - tox -e mypy
+  tags:
+    '*':
+      - parallel: *checks
+      - parallel: *tests-prod
+  pull-requests:
+    'hotfix/**':
+      - parallel: *checks
+      - parallel: *tests-prod
+    'release/**':
+      - parallel: *checks
+      - parallel: *tests-prod
+    '**':
+      - parallel: *checks
+      - parallel: *tests-dev
+  branches:
+    'hotfix/**':
+      - parallel: *checks
+      - parallel: *tests-prod
+    'master':
+      - parallel: *checks
+      - parallel: *tests-prod
+    'release/**':
+      - parallel: *checks
+      - parallel: *tests-prod
+    '**':
+      - parallel: *checks
+      - parallel: *tests-dev

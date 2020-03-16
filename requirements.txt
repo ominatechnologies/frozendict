@@ -1,0 +1,29 @@
+# Base requirements:
+#
+typing-extensions>=3.7.4.1
+
+# Testing requirements:
+#
+coverage>=5.0.3
+flake8>=3.7.9
+mypy>=0.761
+pytest>=5.3.5
+pytest-asyncio>=0.10.0
+pytest-cov>=2.8.1
+pytest-flake8>=1.0.4
+pytest-mypy>=0.5.0
+# pytest-watch>=4.2.0
+-e git+https://github.com/wouter-vdb/pytest-watch#egg=pytest-watch
+
+# Documentation building requirements:
+#
+sphinx>=2.4.3
+sphinx-autobuild>=0.7.1
+sphinx-autodoc-typehints>=1.10.3
+sphinx-jsonschema>=1.13
+sphinx-material>=0.0.23
+sphinxcontrib-bibtex>=1.0.0
+
+# Artifact building requirements:
+#
+wheel>=0.34.2
