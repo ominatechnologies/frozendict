@@ -1,38 +1,35 @@
 from __future__ import annotations
 
-from typing import TypeVar, Mapping, Dict, Optional
+from typing import TypeVar, Mapping, Dict, Optional, Iterator, Any
 
 T = TypeVar('T')
+S = TypeVar('S')
 
 
-class FrozenDict(Mapping[str, T]):
+class FrozenDict(Mapping[S, T]):
     __slots__ = ['_hash_cache', '_dict']
 
     _hash_cache: Optional[int]
-    _dict: Mapping[str, T]
+    _dict: Mapping[S, T]
 
-    def __init__(self, value: Mapping[str, T] = None, **kwargs):
+    def __init__(self, value: Mapping[S, T] = None, **kwargs):
         self._hash_cache = None
 
-        def is_same_type(x) -> bool:
-            if is_same_type.value_type:
-                return x == is_same_type.value_type
-            else:
-                is_same_type.value_type = x
-                return True
-
-        is_same_type.value_type = None
+        def has_homogeneous_type(i) -> bool:
+            iterator: Iterator[Any] = iter(i)
+            first_type: Any = type(next(iterator, None))
+            return all(type(x) is first_type for x in iterator)
 
         if value is not None:
             if not (isinstance(value, Mapping)
                     and isinstance(value, Dict)
-                    and all(isinstance(k, str) and is_same_type(type(v))
-                            for k, v in value.items())):
+                    and has_homogeneous_type(value.keys())
+                    and has_homogeneous_type(value.values())):
                 raise ValueError()
             self._dict = value.copy()
         elif len(kwargs) > 0:
-            if not all(isinstance(k, str) and is_same_type(type(v))
-                       for k, v in kwargs.items()):
+            if not (has_homogeneous_type(kwargs.keys())
+                    and has_homogeneous_type(kwargs.values())):
                 raise ValueError()
             self._dict = dict(**kwargs)
         else:
@@ -48,27 +45,27 @@ class FrozenDict(Mapping[str, T]):
         return len(self._dict)
 
     def __or__(self, other):
-        if isinstance(other, dict):
+        if isinstance(other, Dict):
             return FrozenDict(dict(self._dict, **other))
         elif isinstance(other, FrozenDict):
             return FrozenDict(dict(self._dict, **other._dict))
         else:
-            return NotImplemented
+            raise NotImplementedError
 
-    def union(self, other):
+    def union(self, other) -> FrozenDict[S, T]:
         return self.__or__(other)
 
     def __and__(self, other):
-        if isinstance(other, dict):
+        if isinstance(other, Dict):
             d = {k: v for k, v in self._dict.items() if k in other}
             return FrozenDict(d)
         elif isinstance(other, FrozenDict):
             d = {k: v for k, v in self._dict.items() if k in other._dict}
             return FrozenDict(d)
         else:
-            return NotImplemented
+            raise NotImplementedError
 
-    def intersection(self, other):
+    def intersection(self, other) -> FrozenDict[S, T]:
         return self.__and__(other)
 
     def __repr__(self):
@@ -84,7 +81,7 @@ class FrozenDict(Mapping[str, T]):
 EMPTY_FROZEN_DICT: FrozenDict = FrozenDict()
 
 
-def frozendict(value: Mapping[str, T] = None, **kwargs) -> FrozenDict[T]:
+def frozendict(value: Mapping[S, T] = None, **kwargs) -> FrozenDict[S, T]:
     if value is None and len(kwargs) == 0:
         return EMPTY_FROZEN_DICT
     else:

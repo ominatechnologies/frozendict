@@ -1,7 +1,5 @@
-# These imports must come first to avoid circular dependency issues when
-# building the docs.
-from .AbstractDict import AbstractDict
 from .FrozenDict import FrozenDict, frozendict
+from .AbstractDict import AbstractDict
 
 __all__ = [
     'AbstractDict',
