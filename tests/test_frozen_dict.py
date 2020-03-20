@@ -1,7 +1,8 @@
-from typing import Mapping
+from typing import Mapping, Union
+
+from pytest import raises
 
 from frozendict import FrozenDict, frozendict, AbstractDict
-from pytest import raises
 
 
 def test_init():
@@ -24,18 +25,33 @@ def test_init():
     fd: FrozenDict[str, str] = frozendict({'test': '0'})
     assert fd.get('test') == '0'
 
-    with raises(ValueError):
-        frozendict({'1', '0'})
-
-    with raises(ValueError):
-        frozendict({1, 0})
-
     fd: FrozenDict[int, int] = frozendict({1: 0})
     assert fd.get(1) == 0
 
-    with raises(ValueError):
-        frozendict({'test': 0, 'test1': '1'})
+    fd: FrozenDict[str, Union[int, str]] = frozendict({
+        'test': 0,
+        'test1': '1'
+    })
+    assert fd.get('test') == 0
+    assert fd.get('test1') == '1'
 
+
+def test_init_non_dict():
+    with raises(TypeError):
+        frozendict({'1', '0'})
+
+    with raises(TypeError):
+        frozendict({1, 0})
+
+
+def test_init_homogeneous():
+    with raises(TypeError):
+        frozendict({'test': 0, 'test1': '1'}, homogeneous_type=True)
+    with raises(TypeError):
+        frozendict(test=0, test1='1', homogeneous_type=True)
+
+
+def test_init_kwargs():
     fd: FrozenDict[str, int] = FrozenDict(test=0)
     assert fd.get('test') == 0
 
@@ -50,8 +66,37 @@ def test_init():
     assert fd.get('test') == 0
     assert fd.get('test1') == 1
 
-    with raises(ValueError):
-        frozendict(test=0, test1='1')
+    fd: FrozenDict[str, Union[int, str]] = frozendict(test=0, test1='1')
+    assert fd.get('test') == 0
+    assert fd.get('test1') == '1'
+
+
+def test_init_no_none_value():
+    fd: FrozenDict[str, int] = frozendict({'test': 0}, remove_none_value=True)
+    assert len(fd) == 1
+    assert fd.get('test') == 0
+
+    fd: FrozenDict[str, int] = frozendict({'test': 0, 'test1': None},
+                                          remove_none_value=True)
+    assert len(fd) == 1
+    assert fd.get('test') == 0
+
+    fd: FrozenDict[str, int] = frozendict({'test': 0, 'test1': None},
+                                          remove_none_value=True,
+                                          homogeneous_type=True)
+    assert len(fd) == 1
+    assert fd.get('test') == 0
+
+    fd: FrozenDict[str, int] = frozendict(test=0, test1=None,
+                                          remove_none_value=True)
+    assert len(fd) == 1
+    assert fd.get('test') == 0
+
+    fd: FrozenDict[str, int] = frozendict(test=0, test1=None,
+                                          remove_none_value=True,
+                                          homogeneous_type=True)
+    assert len(fd) == 1
+    assert fd.get('test') == 0
 
 
 def test_get():

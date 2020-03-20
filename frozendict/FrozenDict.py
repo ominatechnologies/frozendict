@@ -12,7 +12,12 @@ class FrozenDict(Mapping[S, T]):
     _hash_cache: Optional[int]
     _dict: Mapping[S, T]
 
-    def __init__(self, value: Mapping[S, T] = None, **kwargs):
+    def __init__(self,
+                 value: Mapping[S, T] = None,
+                 *,
+                 homogeneous_type=False,
+                 remove_none_value=False,
+                 **kwargs):
         self._hash_cache = None
 
         def has_homogeneous_type(i) -> bool:
@@ -21,16 +26,21 @@ class FrozenDict(Mapping[S, T]):
             return all(type(x) is first_type for x in iterator)
 
         if value is not None:
-            if not (isinstance(value, Mapping)
-                    and isinstance(value, Dict)
-                    and has_homogeneous_type(value.keys())
-                    and has_homogeneous_type(value.values())):
-                raise ValueError()
+            if not isinstance(value, Mapping) or not isinstance(value, Dict):
+                raise TypeError
+            if remove_none_value:
+                value = {k: v for k, v in value.items()
+                         if v is not None}
+            if homogeneous_type:
+                if not (has_homogeneous_type(value.keys())
+                        and has_homogeneous_type(value.values())):
+                    raise TypeError
             self._dict = value.copy()
         elif len(kwargs) > 0:
-            if not (has_homogeneous_type(kwargs.keys())
-                    and has_homogeneous_type(kwargs.values())):
-                raise ValueError()
+            if remove_none_value:
+                kwargs = {k: v for k, v in kwargs.items() if v is not None}
+            if homogeneous_type and not has_homogeneous_type(kwargs.values()):
+                raise TypeError
             self._dict = dict(**kwargs)
         else:
             self._dict = dict()
@@ -81,8 +91,15 @@ class FrozenDict(Mapping[S, T]):
 EMPTY_FROZEN_DICT: FrozenDict = FrozenDict()
 
 
-def frozendict(value: Mapping[S, T] = None, **kwargs) -> FrozenDict[S, T]:
+def frozendict(value: Mapping[S, T] = None,
+               *,
+               homogeneous_type=False,
+               remove_none_value=False,
+               **kwargs) -> FrozenDict[S, T]:
     if value is None and len(kwargs) == 0:
         return EMPTY_FROZEN_DICT
     else:
-        return FrozenDict(value, **kwargs)
+        return FrozenDict(value,
+                          homogeneous_type=homogeneous_type,
+                          remove_none_value=remove_none_value,
+                          **kwargs)
