@@ -114,21 +114,4 @@ class FrozenDict(Mapping[S, T]):
         return rv
 
 
-def frozendict(value: Mapping[S, T] = None,
-               *,
-               homogeneous_type=False,
-               remove_none_value=False,
-               **kwargs) -> FrozenDict[S, T]:
-    """
-    Lowercase alias for the FrozenDict constructor
-    :param value: a mutable dict to froze
-    :param homogeneous_type: check that the content of the dictionary has
-    homogeneous types for key and value.
-    :param remove_none_value: remove any None value from the dictionary
-    :param kwargs: It is possible to create the instance through kwargs
-    :return:
-    """
-    return FrozenDict(value,
-                      homogeneous_type=homogeneous_type,
-                      remove_none_value=remove_none_value,
-                      **kwargs)
+frozendict = FrozenDict

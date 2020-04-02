@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from typing import (AbstractSet, ValuesView,
-                    Optional, TypeVar, Tuple)
+from typing import (AbstractSet, Optional, Tuple, TypeVar, ValuesView)
 
 from typing_extensions import Protocol, runtime_checkable
 

@@ -1,11 +1,12 @@
 from typing import Mapping
 
-from frozendict import frozendict, FrozenDict, AbstractDict
+from frozendict import AbstractDict, FrozenDict, frozendict
 
 
 def test_isinstance():
     fd = frozendict()
     assert isinstance(fd, FrozenDict)
+    assert isinstance(fd, frozendict)
     assert isinstance(fd, Mapping)
     assert isinstance(fd, AbstractDict)
 
