@@ -18,14 +18,16 @@ setup(
     author_email=author_email,
     classifiers=[
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     data_files=[
         ('', ['AUTHORS.rst', 'CHANGELOG.rst', 'LICENSE', 'README.rst'])
     ],
     description=description,
+    include_package_data=True,
     install_requires=install_requires,
     keywords=[
+        'immutable',
         'type system',
     ],
     license='UNLICENSED',
@@ -34,11 +36,10 @@ setup(
     package_data={
         name: [
             'py.typed',
-            'schema/*.json',
         ],
     },
     packages=find_packages(),
-    python_requires='>=3.7.6',
+    python_requires='>=3.8.2',
     url=repo,
     version=release,
     zip_safe=False,

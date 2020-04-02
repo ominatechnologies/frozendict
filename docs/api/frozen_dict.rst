@@ -1,0 +1,4 @@
+FrozenDict
+==========
+
+.. automodule:: frozendict.FrozenDict
