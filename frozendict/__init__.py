@@ -1,4 +1,4 @@
-from .AbstractDict import AbstractDict
+from typing import Mapping as AbstractDict
 from .FrozenDict import FrozenDict, frozendict
 
 __all__ = [
