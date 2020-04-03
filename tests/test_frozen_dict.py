@@ -2,7 +2,7 @@ from typing import Mapping, Union
 
 from pytest import raises
 
-from frozendict import FrozenDict, frozendict, AbstractDict
+from frozendict import AbstractDict, FrozenDict, frozendict
 
 
 def test_init():
@@ -49,6 +49,10 @@ def test_init_homogeneous():
         frozendict({'test': 0, 'test1': '1'}, homogeneous_type=True)
     with raises(TypeError):
         frozendict(test=0, test1='1', homogeneous_type=True)
+    with raises(TypeError):
+        frozendict({'test': 0, 1: 1}, homogeneous_type=True)
+    with raises(TypeError):
+        frozendict({'test': 0, 1: '1'}, homogeneous_type=True)
 
 
 def test_init_kwargs():
@@ -118,8 +122,24 @@ def test_len():
 
 def test_singleton():
     assert frozendict() is frozendict()
-    assert frozendict({}) is not frozendict()
-    assert frozendict({}) is not frozendict({})
+    assert frozendict({}) is frozendict()
+    assert frozendict({}) is frozendict({})
+    assert frozendict() is FrozenDict()
+    assert frozendict() is FrozenDict({})
+    assert frozendict({}) is FrozenDict()
+    assert frozendict({}) is FrozenDict({})
+    assert FrozenDict() is FrozenDict()
+    assert FrozenDict({}) is FrozenDict()
+    assert FrozenDict() is FrozenDict({})
+    assert FrozenDict({}) is FrozenDict({})
+    assert FrozenDict({'test': 'test'}) is not FrozenDict()
+    assert FrozenDict() is not frozendict({'test': 'test'})
+    assert FrozenDict() is not frozendict(test=0)
+    assert frozendict() is not FrozenDict({'test': 'test'})
+    assert frozendict() is not FrozenDict(test=0)
+    assert FrozenDict({'test': 'test'}) is not FrozenDict({'test': 'test'})
+    assert FrozenDict(test=0) is not FrozenDict({'test': 'test'})
+    assert FrozenDict(test=0) is not FrozenDict(test=0)
 
 
 def test_equality():
