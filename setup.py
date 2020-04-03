@@ -18,7 +18,7 @@ setup(
     author_email=author_email,
     classifiers=[
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.5',
     ],
     data_files=[
         ('', ['AUTHORS.rst', 'CHANGELOG.rst', 'LICENSE', 'README.rst'])
@@ -39,7 +39,7 @@ setup(
         ],
     },
     packages=find_packages(),
-    python_requires='>=3.8.2',
+    python_requires='>=3.5.0',
     url=repo,
     version=release,
     zip_safe=False,
