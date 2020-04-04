@@ -1,4 +1,0 @@
-AbstractDict
-============
-
-.. automodule:: frozendict.AbstractDict

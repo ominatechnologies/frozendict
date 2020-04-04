@@ -1,36 +1,47 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Iterator, Mapping, Optional, TypeVar
+from typing import (Any, ClassVar, Dict, Iterator, Mapping, Optional, Set,
+                    TypeVar)
 
-T = TypeVar('T')
-S = TypeVar('S')
+KT = TypeVar('KT')
+VT_co = TypeVar('VT_co', covariant=True)
 
 
-class FrozenDict(Mapping[S, T]):
+class FrozenDict(Mapping[KT, VT_co]):
     """
     An immutable dictionary that implements :py:class:`typing.Mapping`
     protocol for python 3.
     """
-    __slots__ = ['_hash_cache', '_dict']
+
+    # -- Class Initialization --------------- --- --  -
+
+    _empty_frozendict: ClassVar[Optional[FrozenDict]] = None
+    _optional_keys: ClassVar[Set[str]] = {'homogeneous_type',
+                                          'remove_none_value'}
+
+    # -- Instance Initialization --------------- --- --  -
+
+    __slots__ = ('_hash_cache', '_dict')
 
     _hash_cache: Optional[int]
-    _dict: Mapping[S, T]
-    _instance = None
-    _optional_keys = {'homogeneous_type', 'remove_none_value'}
+    _dict: Mapping[KT, VT_co]
 
     def __new__(cls, *args, **kwargs):
-        """
-        Return a singleton instance if args and kwargs are empty
-        """
         if ((len(args) == 0 or args[0] is None or len(args[0]) == 0)
                 and len(set(kwargs.keys()) - cls._optional_keys) == 0):
-            if cls._instance is None:
-                cls._instance = super(FrozenDict, cls).__new__(cls)
-            return cls._instance
-        return super(FrozenDict, cls).__new__(cls)
+            # Return the same empty frozendict:
+            if cls._empty_frozendict is None:
+                cls._empty_frozendict = super(FrozenDict, cls).__new__(cls)
+            return cls._empty_frozendict
+        elif len(args) == 1 and isinstance(args[0], FrozenDict):
+            # Return the given frozendict as is:
+            return args[0]
+        else:
+            # Initialize a new frozendict.
+            return super(FrozenDict, cls).__new__(cls)
 
     def __init__(self,
-                 value: Mapping[S, T] = None,
+                 value: Mapping[KT, VT_co] = None,
                  *,
                  homogeneous_type=False,
                  remove_none_value=False,
@@ -45,9 +56,14 @@ class FrozenDict(Mapping[S, T]):
             first_type: Any = type(next(iterator, None))
             return all(type(x) is first_type for x in iterator)
 
-        if value:
-            if not isinstance(value, Mapping) or not isinstance(value, Dict):
-                raise TypeError
+        if value is not None:
+            if not isinstance(value, Dict):
+                if isinstance(value, Mapping):
+                    value = dict(value)
+                else:
+                    msg = "Expected a mapping as value, got a {}."
+                    raise TypeError(msg.format(type(value)))
+
             if remove_none_value:
                 value = {k: v for k, v in value.items()
                          if v is not None}
@@ -55,7 +71,7 @@ class FrozenDict(Mapping[S, T]):
                 if not (has_homogeneous_type(value.keys())
                         and has_homogeneous_type(value.values())):
                     raise TypeError
-            self._dict = value.copy()
+            self._dict = value
         elif len(kwargs) > 0:
             buildable_kwargs = {k: v for k, v in kwargs.items()
                                 if k not in self._optional_keys}
@@ -71,25 +87,7 @@ class FrozenDict(Mapping[S, T]):
         else:
             self._dict = dict()
 
-    def __getitem__(self, key):
-        return self._dict[key]
-
-    def __iter__(self):
-        return iter(self._dict)
-
-    def __len__(self):
-        return len(self._dict)
-
-    def __or__(self, other):
-        if isinstance(other, Dict):
-            return FrozenDict(dict(self._dict, **other))
-        elif isinstance(other, FrozenDict):
-            return FrozenDict(dict(self._dict, **other._dict))
-        else:
-            raise NotImplementedError
-
-    def union(self, other) -> FrozenDict[S, T]:
-        return self.__or__(other)
+    # -- System Methods --------------- --- --  -
 
     def __and__(self, other):
         if isinstance(other, Dict):
@@ -99,19 +97,68 @@ class FrozenDict(Mapping[S, T]):
             d = {k: v for k, v in self._dict.items() if k in other._dict}
             return FrozenDict(d)
         else:
-            raise NotImplementedError
+            raise NotImplementedError()
 
-    def intersection(self, other) -> FrozenDict[S, T]:
-        return self.__and__(other)
+    def __contains__(self, key):
+        return key in self._dict
 
-    def __repr__(self):
-        return '<%s %r>' % (self.__class__.__name__, self._dict)
+    def __copy__(self):
+        return self
+
+    def __deepcopy__(self):
+        return self
+
+    def __eq__(self, other):
+        if isinstance(other, FrozenDict):
+            return self._dict == other._dict
+        elif isinstance(other, Dict):
+            return self._dict == other
+        else:
+            return NotImplementedError()
+
+    def __getitem__(self, key):
+        return self._dict[key]
 
     def __hash__(self):
         if self._hash_cache is not None:
             return self._hash_cache
         rv = self._hash_cache = hash(frozenset(self._dict.items()))
         return rv
+
+    def __iter__(self):
+        return iter(self._dict)
+
+    def __len__(self):
+        return len(self._dict)
+
+    def __or__(self, other):
+        if isinstance(other, FrozenDict):
+            return FrozenDict(dict(self._dict, **other._dict))
+        elif isinstance(other, Dict):
+            return FrozenDict(dict(self._dict, **other))
+        else:
+            raise NotImplementedError()
+
+    def __repr__(self):
+        return '<%s %r>' % (self.__class__.__name__, self._dict)
+
+    def copy(self):
+        return self
+
+    def intersection(self, other):
+        return self.__and__(other)
+
+    def items(self):
+        return self._dict.items()
+
+    def keys(self):
+        return self._dict.keys()
+
+    def union(self, other):
+        return self.__or__(other)
+
+    def values(self):
+        return self._dict.values()
 
 
 frozendict = FrozenDict
