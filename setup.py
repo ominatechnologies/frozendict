@@ -40,7 +40,7 @@ setup(
         ],
     },
     packages=find_packages(),
-    python_requires='>=3.7.7',
+    python_requires='>=3.7',
     url=repo,
     version=release,
     zip_safe=False,
