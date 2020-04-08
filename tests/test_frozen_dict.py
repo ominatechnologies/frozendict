@@ -238,6 +238,16 @@ def test_repr():
     assert ffd.__repr__() == pffd
 
 
+def test_serialize():
+    d = {'k_1': 0, 'k_2': 1}
+    fd: FrozenDict[str, int] = FrozenDict(d)
+    ffd: FrozenDict[str, FrozenDict[str, int]] = FrozenDict({'k_1': fd})
+    s_fd: Mapping[str, int] = fd.serialize()
+    s_ffd: Mapping[str, Mapping[str, int]] = ffd.serialize()
+    assert s_fd == d
+    assert s_ffd == {'k_1': d}
+
+
 def test_typing_1():
     class ClassA:
         pass

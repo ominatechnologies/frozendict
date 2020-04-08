@@ -160,5 +160,14 @@ class FrozenDict(Mapping[KT, VT_co]):
     def values(self):
         return self._dict.values()
 
+    def serialize(self) -> Mapping:
+        """
+        Serialize the Frozendict. If underling values in the mapping have a
+        serialize function it will call it.
+        """
+        return {k if isinstance(k, str) else str(k): v.serialize() if getattr(
+            v, "serialize", None) else v
+                for k, v in self.items()}
+
 
 frozendict = FrozenDict
