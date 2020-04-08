@@ -216,7 +216,7 @@ def test_intersection():
 
 def test_imutable():
     d = {'k_1': 0, 'k_2': 1}
-    fd: FrozenDict[str, int] = FrozenDict(d.copy())
+    fd: FrozenDict[str, int] = FrozenDict(d)
     assert fd.items() == d.items()
     d['test3'] = 3
     assert d.get('test3') == 3
@@ -226,6 +226,15 @@ def test_imutable():
     assert ffd.get('k_1') == fd
 
     assert len({fd, fd, fd, fd, fd, fd}) == 1
+
+
+def test_imutable_no_copy():
+    d = {'k_1': 0, 'k_2': 1}
+    fd: FrozenDict[str, int] = frozendict(d, no_copy=True)
+    assert fd.items() == d.items()
+    d['k_3'] = 3
+    assert d.get('k_3') == 3
+    assert fd.get('k_3') == 3
 
 
 def test_repr():
