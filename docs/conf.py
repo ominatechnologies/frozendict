@@ -114,7 +114,6 @@ html_theme_options = {
     # Set the repo location to get a badge with stats
     'repo_url': repo,
     'repo_name': name,
-    'repo_type': 'bitbucket',
 
     # Visible levels of the global TOC; -1 means unlimited
     'globaltoc_depth': 2,
