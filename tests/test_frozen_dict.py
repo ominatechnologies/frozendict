@@ -157,7 +157,7 @@ def test_equality():
     assert FrozenDict({'k_2': 0}) != FrozenDict({'k_1': 0})
 
 
-def test_hash():
+def test_hash_1():
     assert hash(FrozenDict()) == hash(FrozenDict())
     assert hash(FrozenDict({'k_1': 0})) == hash(FrozenDict({'k_1': 0}))
     d = {'k_1': 0, 'k_2': 1}
@@ -167,6 +167,13 @@ def test_hash():
     assert hash(FrozenDict()) != hash(FrozenDict({'k_1': 0}))
     assert hash(FrozenDict({'k_1': 1})) != hash(FrozenDict({'k_1': 0}))
     assert hash(FrozenDict({'k_2': 0})) != hash(FrozenDict({'k_1': 0}))
+
+
+def test_hash_2():
+    d_1 = {'k_1': 0, 'k_2': 1}
+    d_2 = {'k_3': d_1}
+    fd_1 = FrozenDict(d_2)
+    assert isinstance(hash(fd_1), int)
 
 
 def test_keys():
