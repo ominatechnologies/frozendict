@@ -10,15 +10,14 @@ mypy>=0.770
 pytest>=5.4.1
 pytest-cov>=2.8.1
 pytest-flake8>=1.0.4
-pytest-mypy>=0.6.0
+pytest-mypy>=0.6.1
 # pytest-watch>=4.2.0
 -e git+https://github.com/wouter-vdb/pytest-watch#egg=pytest-watch
 
 # Documentation building requirements:
 #
-sphinx>=2.4.4
+sphinx>=3.0.0
 sphinx-autobuild>=0.7.1
-sphinx-autodoc-typehints>=1.10.3
 sphinx-material>=0.0.23
 sphinxcontrib-bibtex>=1.0.0
 
