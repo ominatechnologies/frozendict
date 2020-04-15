@@ -8,7 +8,7 @@ KT = TypeVar('KT')
 VT_co = TypeVar('VT_co', covariant=True)
 
 
-class NoCopyFrozenDict(FrozenDict):
+class NoCopyFrozenDict(FrozenDict[KT, VT_co]):
     def __init__(self,
                  value: Mapping[KT, VT_co] = None,
                  *,
