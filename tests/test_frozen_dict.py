@@ -110,28 +110,28 @@ def test_init_kwargs():
 
 
 def test_init_no_none_value():
-    fd: FrozenDict[str, int] = FrozenDict({'k_1': 0}, remove_none_value=True)
+    fd: FrozenDict[str, int] = FrozenDict({'k_1': 0}, remove_none_values=True)
     assert len(fd) == 1
     assert fd.get('k_1') == 0
 
     fd: FrozenDict[str, int] = FrozenDict({'k_1': 0, 'k_2': None},
-                                          remove_none_value=True)
+                                          remove_none_values=True)
     assert len(fd) == 1
     assert fd.get('k_1') == 0
 
     fd: FrozenDict[str, int] = FrozenDict({'k_1': 0, 'k_2': None},
-                                          remove_none_value=True,
+                                          remove_none_values=True,
                                           homogeneous_type=True)
     assert len(fd) == 1
     assert fd.get('k_1') == 0
 
     fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=None,
-                                          remove_none_value=True)
+                                          remove_none_values=True)
     assert len(fd) == 1
     assert fd.get('k_1') == 0
 
     fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=None,
-                                          remove_none_value=True,
+                                          remove_none_values=True,
                                           homogeneous_type=True)
     assert len(fd) == 1
     assert fd.get('k_1') == 0
@@ -243,7 +243,7 @@ def test_intersection():
         FrozenDict().intersection(('k_1', 0))
 
 
-def test_imutable():
+def test_immutable():
     d = {'k_1': 0, 'k_2': 1}
     fd: FrozenDict[str, int] = FrozenDict(d)
     assert fd.items() == d.items()
@@ -266,7 +266,7 @@ def test_imutable():
     assert fd.get('k_1').get('k_1') == 0
 
 
-def test_imutable_no_copy():
+def test_immutable_no_copy():
     d = {'k_1': 0, 'k_2': 1}
     fd_1: FrozenDict[str, int] = frozendict(d, no_copy=True)
     assert fd_1.items() == d.items()
@@ -275,7 +275,7 @@ def test_imutable_no_copy():
     assert fd_1.get('k_3') == 3
 
 
-def test_imutable_no_copy_1():
+def test_immutable_no_copy_1():
     from frozendict import NoCopyFrozenDict as FrozenDict
     d = {'k_1': 0, 'k_2': 1}
     fd_2: FrozenDict[str, int] = FrozenDict(d)
