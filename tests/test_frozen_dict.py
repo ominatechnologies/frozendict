@@ -1,4 +1,4 @@
-from typing import Mapping, Optional, Union
+from typing import Dict, Mapping, Optional, Union
 
 from pytest import raises
 
@@ -45,6 +45,11 @@ def test_init_7():
     assert fd.get('k_2') == 'v_2'
 
 
+def test_init_8():
+    with raises(TypeError):
+        FrozenDict({'k_1': 0, 'k_2': 'v_2', 'k_3': {'sk_1': 1, 'sk_2': '2'}})
+
+
 def test_init_non_dict():
     with raises(TypeError):
         # noinspection PyTypeChecker
@@ -85,6 +90,23 @@ def test_init_kwargs():
     assert fd.keys() == {'k_1', 'k_2'}
     assert fd.get('k_1') == 0
     assert fd.get('k_2') == '1'
+
+    fd: FrozenDict[str, Dict[str, int]] = FrozenDict(
+        k_1=frozendict({
+            'k_1': 0,
+            'k_2': 1
+        }),
+        k_2=frozendict({
+            'k_3': 2,
+            'k_4': 3
+        }))
+    assert fd.keys() == {'k_1', 'k_2'}
+    assert fd.get('k_1') == {'k_1': 0, 'k_2': 1}
+    assert fd.get('k_2') == {'k_3': 2, 'k_4': 3}
+
+    with raises(TypeError):
+        FrozenDict(k_1={'k_1': 0, 'k_2': 1},
+                   k_2={'k_3': 2, 'k_4': 3})
 
 
 def test_init_no_none_value():
@@ -172,8 +194,8 @@ def test_hash_1():
 def test_hash_2():
     d_1 = {'k_1': 0, 'k_2': 1}
     d_2 = {'k_3': d_1}
-    fd_1 = FrozenDict(d_2)
-    assert isinstance(hash(fd_1), int)
+    with raises(TypeError):
+        FrozenDict(d_2)
 
 
 def test_keys():
@@ -231,17 +253,42 @@ def test_imutable():
 
     ffd: FrozenDict[str, FrozenDict[str, int]] = FrozenDict({'k_1': fd})
     assert ffd.get('k_1') == fd
-
     assert len({fd, fd, fd, fd, fd, fd}) == 1
+
+    fd_1: FrozenDict[str, int] = frozendict({'k_1': 0, 'k_2': 1})
+    d_2 = {'k_3': fd_1}
+    fd: FrozenDict[str, FrozenDict[str, int]] = FrozenDict(d_2)
+    assert fd.get('k_3').get('k_1') == 0
+
+    fd_1 = frozendict({'k_1': 0, 'k_2': 1})
+    fd_2 = frozendict({'k_1': 1})
+    fd: FrozenDict[str, Dict[str, int]] = FrozenDict(k_1=fd_1, k_2=fd_2)
+    assert fd.get('k_1').get('k_1') == 0
 
 
 def test_imutable_no_copy():
     d = {'k_1': 0, 'k_2': 1}
-    fd: FrozenDict[str, int] = frozendict(d, no_copy=True)
-    assert fd.items() == d.items()
+    fd_1: FrozenDict[str, int] = frozendict(d, no_copy=True)
+    assert fd_1.items() == d.items()
     d['k_3'] = 3
     assert d.get('k_3') == 3
-    assert fd.get('k_3') == 3
+    assert fd_1.get('k_3') == 3
+
+
+def test_imutable_no_copy_1():
+    from frozendict import NoCopyFrozenDict as FrozenDict
+    d = {'k_1': 0, 'k_2': 1}
+    fd_2: FrozenDict[str, int] = FrozenDict(d)
+    assert isinstance(fd_2, FrozenDict)
+    assert fd_2.items() == d.items()
+    d['k_3'] = 3
+    assert d.get('k_3') == 3
+    assert fd_2.get('k_3') == 3
+
+    fd_3: FrozenDict[str, Dict[str, int]] = FrozenDict(k=fd_2)
+    assert isinstance(fd_3, FrozenDict)
+    assert d.get('k_3') == 3
+    assert fd_3.get('k').get('k_3') == 3
 
 
 def test_repr():
