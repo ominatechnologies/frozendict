@@ -1,8 +1,11 @@
 from typing import Mapping as AbstractDict
-from .FrozenDict import FrozenDict, frozendict
+
+from .frozen_dict import FrozenDict, frozendict
+from .no_copy_frozen_dict import NoCopyFrozenDict
 
 __all__ = [
     'AbstractDict',
-    'frozendict',
     'FrozenDict',
+    'frozendict',
+    'NoCopyFrozenDict',
 ]
