@@ -4,6 +4,7 @@ API
    :maxdepth: 2
 
    frozen_dict
+   no_copy_frozen_dict
 
 Aliases
 -------
