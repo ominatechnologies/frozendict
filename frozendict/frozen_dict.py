@@ -137,11 +137,11 @@ class FrozenDict(Mapping[KT, VT_co]):
 
     def __eq__(self, other):
         if isinstance(other, FrozenDict):
-            return self._dict == other._dict
+            return self.__hash__() == other.__hash__()
         elif isinstance(other, Dict):
             return self._dict == other
         else:
-            return NotImplementedError()
+            return False
 
     def __getitem__(self, key):
         return self._dict[key]

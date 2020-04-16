@@ -173,10 +173,11 @@ def test_equality():
     assert FrozenDict({'k_1': 0}) == FrozenDict({'k_1': 0})
     d = {'k_1': 0, 'k_2': 1}
     fd: FrozenDict[str, int] = FrozenDict(d)
-    assert fd == FrozenDict(d)
+    assert fd == d
     assert FrozenDict() != FrozenDict({'k_1': 0})
     assert FrozenDict({'k_1': 1}) != FrozenDict({'k_1': 0})
     assert FrozenDict({'k_2': 0}) != FrozenDict({'k_1': 0})
+    assert FrozenDict(d) != {'k_1', 'k_2'}
 
 
 def test_hash_1():
