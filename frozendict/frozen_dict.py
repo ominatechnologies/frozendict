@@ -167,7 +167,7 @@ class FrozenDict(Mapping[KT, VT_co]):
             raise NotImplementedError()
 
     def __repr__(self):
-        return '<%s %r>' % (self.__class__.__name__, self._dict)
+        return f"<FrozenDict {self._dict}>"
 
     def copy(self):
         return self

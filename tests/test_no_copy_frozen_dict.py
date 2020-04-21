@@ -32,3 +32,9 @@ def test_typing_3():
     dct: Dict[str, float] = {'k_1': 1.0}
     foo = Foo(fd=NoCopyFrozenDict(dct))
     assert foo.fd == dct
+
+
+def test_repr():
+    # We want "<FrozenDict ...>" instead of "<NoCopyFrozenDict ...>"
+    dct = NoCopyFrozenDict({"k_1": 1.0})
+    assert repr(dct) == "<FrozenDict {'k_1': 1.0}>"
