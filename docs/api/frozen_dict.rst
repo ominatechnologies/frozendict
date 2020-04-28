@@ -1,4 +1,4 @@
 FrozenDict
 ==========
 
-.. automodule:: frozendict.FrozenDict
+.. automodule:: frozendict.frozen_dict
