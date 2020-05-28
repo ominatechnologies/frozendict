@@ -1,0 +1,4 @@
+.github
+.mypy_cache
+.tox
+frozendict.egg-info
