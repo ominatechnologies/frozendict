@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from typing import (Any, ClassVar, Dict, Iterator, Mapping, Optional, Set,
-                    TypeVar)
+from typing import (
+    Any, ClassVar, Dict, Iterator, Mapping, Optional, Set,
+    TypeVar,
+)
 
-KT = TypeVar('KT')
-VT_co = TypeVar('VT_co', covariant=True)
+KT = TypeVar("KT")
+VT_co = TypeVar("VT_co", covariant=True)
 
 
 class FrozenDict(Mapping[KT, VT_co]):
@@ -16,13 +18,13 @@ class FrozenDict(Mapping[KT, VT_co]):
     # -- Class Initialization --------------- --- --  -
 
     _empty_frozendict: ClassVar[Optional[FrozenDict]] = None
-    _optional_keys: ClassVar[Set[str]] = {'homogeneous_type',
-                                          'remove_none_values',
-                                          'no_copy'}
+    _optional_keys: ClassVar[Set[str]] = {"homogeneous_type",
+                                          "remove_none_values",
+                                          "no_copy"}
 
     # -- Instance Initialization --------------- --- --  -
 
-    __slots__ = ('_hash_cache', '_dict')
+    __slots__ = ["_hash_cache", "_dict"]
 
     _hash_cache: Optional[int]
     _dict: Mapping[KT, VT_co]
