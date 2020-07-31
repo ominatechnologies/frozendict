@@ -4,43 +4,43 @@ from config import author, author_email, description, name, release, repo
 
 
 def readme():
-    with open('README.rst') as f:
+    with open("README.rst") as f:
         return f.read()
 
 
 # 3rd-party run-time requirements:
 install_requires = [
-    'typing-extensions==3.7.4.2',
+    "typing-extensions==3.7.4.2",
 ]
 
 setup(
     author=author,
     author_email=author_email,
     classifiers=[
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     data_files=[
-        ('', ['AUTHORS.rst', 'CHANGELOG.rst', 'LICENSE', 'README.rst'])
+        ("", ["AUTHORS.rst", "CHANGELOG.rst", "LICENSE", "README.rst"])
     ],
     description=description,
     include_package_data=True,
     install_requires=install_requires,
     keywords=[
-        'immutable',
-        'type system',
+        "immutable",
+        "type system",
     ],
-    license='UNLICENSED',
+    license="UNLICENSED",
     long_description=readme(),
     name=name,
     package_data={
         name: [
-            'py.typed',
+            "py.typed",
         ],
     },
     packages=find_packages(),
-    python_requires='>=3.7',
+    python_requires=">=3.7",
     url=repo,
     version=release,
     zip_safe=False,

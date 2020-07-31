@@ -1,16 +1,16 @@
 # Single-sourced project configuration values:
 
 # the full version, including alpha/beta/rc tags
-release = '1.2.3'
+release = "1.2.3"
 
 # the short X.Y version
-version = '1.2'
+version = "1.2"
 
 # distribution package name
-name = 'frozendict'
+name = "frozendict"
 
 # capitalized label
-project = 'FROZENDICT'
+project = "FROZENDICT"
 
 description = "A modern implementation of FrozenDict."
 author = "Omina Technologies"
