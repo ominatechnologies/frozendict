@@ -10,7 +10,7 @@ def readme():
 
 # 3rd-party run-time requirements:
 install_requires = [
-    "typing-extensions==3.7.4.2",
+    "typing-extensions==3.7.4.3",
 ]
 
 setup(
