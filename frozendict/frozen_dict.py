@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from typing import (
-    Any, ClassVar, Dict, Iterator, Mapping, Optional, Set,
-    TypeVar,
+    Any, ClassVar, Dict, Iterator, Mapping, Optional, Set, TypeVar,
 )
 
 KT = TypeVar("KT")
@@ -18,9 +17,11 @@ class FrozenDict(Mapping[KT, VT_co]):
     # -- Class Initialization --------------- --- --  -
 
     _empty_frozendict: ClassVar[Optional[FrozenDict]] = None
-    _optional_keys: ClassVar[Set[str]] = {"homogeneous_type",
-                                          "remove_none_values",
-                                          "no_copy"}
+    _optional_keys: ClassVar[Set[str]] = {
+        "homogeneous_type",
+        "remove_none_values",
+        "no_copy",
+    }
 
     # -- Instance Initialization --------------- --- --  -
 
@@ -42,6 +43,22 @@ class FrozenDict(Mapping[KT, VT_co]):
         else:
             # Initialize a new FrozenDict.
             return super(FrozenDict, cls).__new__(cls)
+
+    def __getnewargs__(self):
+        # This method is implemented in order to achieve proper unpickling
+        # while also supporting the optimization of using the same "empty"
+        # frozen dict instance for empty dicts.
+        # Inspired by: https://github.com/Technologicat/unpythonic/issues/55
+        if self is not self._empty_frozendict:
+            # By returning a non-empty tuple of arguments, which are passed to
+            # the `__new__` method when unpickling a frozen dictionary, this
+            # method is capable of distinguishing between the "normal"
+            # instantiation of an "empty" frozen dictionary and the
+            # instantiation when unpickling. Note that the actual argument does
+            # not matter.
+            # noinspection PyRedundantParentheses
+            return ("non_empty",)
+        return ()
 
     def __init__(self,
                  value: Mapping[KT, VT_co] = None,
