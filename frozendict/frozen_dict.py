@@ -45,17 +45,33 @@ class FrozenDict(Mapping[KT, VT_co]):
             return super(FrozenDict, cls).__new__(cls)
 
     def __getnewargs__(self):
-        # This method is implemented in order to achieve proper unpickling
-        # while also supporting the optimization of using the same "empty"
-        # frozen dict instance for empty dicts.
+        # When instantiating a frozendict object, the static `__new__` method
+        # is called with the arguments passed to the constructor. When the
+        # `args` argument is "empty", the `__new__` method can return the
+        # "empty" frozendict singleton in the same way that instantiating an
+        # "empty" frozenset results in the same "empty" frozenset singleton.
+        #
+        # However, when unpickling a class instance, the static `__new__`
+        # method is called without arguments to instantiate a "fresh" instance.
+        # The unpickling process then updates the `__dct__` with the unpickled
+        # properties. Because of this, the `__new__` method cannot distinguish
+        # between "regular" instantiations of "empty" frozen dictionaries and
+        # "empty" instantiations as part of unpickling non-empty frozen
+        # dictionaries. Hence it cannot decide when to yield the "empty"
+        # frozendict singleton and when not to.
+        #
+        # The `__getnewargs__` implementation is provided to remedy this
+        # problem. When unpickling an object, this method is called and the
+        # result is passed to the `__new__` method as the `args` argument.
+        # By returning a non-empty tuple of arguments for non-empty dicts,
+        # the `__new__` method is capable of distinguishing between "regular"
+        # instantiations of "empty" frozen dictionaries and "empty"
+        # instantiations as part of unpickling non-empty frozen dictionaries.
+        # Note that the actual argument returned by this method does not
+        # matter, it just needs a non-empty tuple.
+        #
         # Inspired by: https://github.com/Technologicat/unpythonic/issues/55
         if self is not self._empty_frozendict:
-            # By returning a non-empty tuple of arguments, which are passed to
-            # the `__new__` method when unpickling a frozen dictionary, this
-            # method is capable of distinguishing between the "normal"
-            # instantiation of an "empty" frozen dictionary and the
-            # instantiation when unpickling. Note that the actual argument does
-            # not matter.
             # noinspection PyRedundantParentheses
             return ("non_empty",)
         return ()
