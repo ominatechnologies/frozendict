@@ -4,10 +4,10 @@ typing-extensions==3.7.4.3
 
 # Testing requirements:
 #
-coverage==5.2.1
+coverage==5.3
 flake8==3.8.3
 mypy==0.782
-pytest==6.0.1
+pytest==6.0.2
 pytest-cov==2.10.1
 pytest-flake8==1.0.6
 pytest-mypy==0.7.0
@@ -18,7 +18,7 @@ pytest-mypy==0.7.0
 #
 sphinx==3.2.1
 sphinx-autobuild==2020.9.1
-sphinx-material==0.0.30
+sphinx-material==0.0.32
 sphinxcontrib-bibtex==1.0.0
 
 # Artifact building requirements:
