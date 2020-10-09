@@ -11,7 +11,7 @@ FrozenDict Readme
 
 This library provides a modern implementation of frozendict.
 
-`API-Docs <https://ominatechnologies.github.io/frozendict>`_
+`API-Docs <https://ominatechnologies.github.io/frozendict/>`_
 
 Project Setup
 -------------
