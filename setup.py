@@ -31,13 +31,11 @@ setup(
         "immutable",
         "type system",
     ],
-    license="UNLICENSED",
+    license="MIT",
     long_description=readme(),
     name=name,
     package_data={
-        name: [
-            "py.typed",
-        ],
+        name: ["py.typed"],
     },
     packages=find_packages(),
     python_requires=">=3.7",

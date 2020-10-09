@@ -107,6 +107,7 @@ autodoc_typehints = "description"
 # Material theme setup:
 html_theme = 'sphinx_material'
 html_theme_path = sphinx_material.html_theme_path()
+html_baseurl = "https://ominatechnologies.github.io/frozendict/"
 html_context = sphinx_material.get_html_context()
 html_theme_options = {
     # Set the name of the project to appear in the navigation.
@@ -118,7 +119,7 @@ html_theme_options = {
 
     # Specify a base_url used to generate sitemap.xml. If not
     # specified, then no sitemap will be built.
-    # 'base_url': 'https://project.github.io/project',
+    'base_url': "https://ominatechnologies.github.io/frozendict/",
 
     # Set the color and the accent color
     'theme_color': '304FFE',
@@ -132,15 +133,13 @@ html_theme_options = {
     # Visible levels of the global TOC; -1 means unlimited
     'globaltoc_depth': 2,
     # If False, expand all TOC entries
-    # 'globaltoc_collapse': False,
+    'globaltoc_collapse': False,
     # If True, show hidden TOC entries
     # 'globaltoc_includehidden': False,
 }
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static", "_static/.nojekyll"]
+html_extra_path = [".nojekyll"]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -155,7 +154,7 @@ html_sidebars = {
 }
 
 html_copy_source = False
-html_show_sourcelink = False
+html_show_sourcelink = True
 html_show_copyright = True
 
 # The name of math_renderer extension for HTML output. Defaults to 'mathjax'.
@@ -190,7 +189,6 @@ latex_preamble = r"""
   \fancypagestyle{normal}{
     \fancyhf{}
     \fancyhead[LE,RO]{{\py@HeaderFamily FrozenDict v\version}}
-    \fancyhead[RE,LO]{{\py@HeaderFamily CONFIDENTIAL INFORMATION}}
     \fancyfoot[LE,RO]{{\py@HeaderFamily\thepage}}
     \fancyfoot[LO]{{\py@HeaderFamily\nouppercase{\rightmark}}}
     \fancyfoot[RE]{{\py@HeaderFamily\nouppercase{\leftmark}}}
@@ -200,7 +198,6 @@ latex_preamble = r"""
   % Update the first page of each chapter:
   \fancypagestyle{plain}{
     \fancyhf{}
-    \fancyhead[C]{{\py@HeaderFamily CONFIDENTIAL INFORMATION}}
     \fancyfoot[LE,RO]{{\py@HeaderFamily\thepage}}
     \renewcommand{\headrulewidth}{0.4pt}
     \renewcommand{\footrulewidth}{0.4pt}

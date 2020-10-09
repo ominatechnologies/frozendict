@@ -7,6 +7,12 @@ FrozenDict Documentation
    changelog
 
 
+Readme
+------
+.. include:: ../README.rst
+   :start-after: inclusion-marker
+
+
 Indices and tables
 ------------------
 - :ref:`genindex`
