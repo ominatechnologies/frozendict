@@ -4,6 +4,9 @@ FrozenDict Readme
 .. image:: https://img.shields.io/badge/security-bandit-yellow.svg
     :target: https://github.com/PyCQA/bandit
     :alt: Security Status
+.. image:: https://github.com/ominatechnologies/frozendict/workflows/Test%20package/badge.svg
+    :alt: Tests Status
+
 .. inclusion-marker
 
 This library provides a modern implementation of frozendict.
