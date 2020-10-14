@@ -1,10 +1,8 @@
 # Single-sourced project configuration values:
 
 # the full version, including alpha/beta/rc tags
-release = "1.2.4"
-
-# the short X.Y version
-version = "1.2"
+release = "2020.10.14"
+version = release
 
 # distribution package name
 name = "frozendict"

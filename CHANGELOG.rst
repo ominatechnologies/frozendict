@@ -21,3 +21,13 @@ v1.2 - 2020-04-15
   by default and which can be imported as a drop-in replacement using:
   :code:`from frozendict import NoCopyFrozenDict as FrozenDict`.
 - Various fixes.
+
+
+2020.10.14
+++++++++++
+- fix: Various minor improvements and fixes.
+- chore: Update dependencies.
+
+
+Head
+++++
