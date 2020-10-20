@@ -15,9 +15,12 @@ This library provides a modern implementation of frozendict.
 
 Project Setup
 -------------
-We use pytest_ as testing framework and our code provides type hinting (see
-PEP-484_ and PEP-561_) to enable static type checking using mypy_. For
-test-driven development, we use pytest-watch_. We use flake8_ for code
+This project requires Python 3.7 or higher. It is supported for Python 3.7, 3.8
+and 3.9.
+
+This project uses pytest_ as testing framework and our code provides type
+hinting (see PEP-484_ and PEP-561_) to enable static type checking using mypy_.
+For test-driven development, we use pytest-watch_. We use flake8_ for code
 linting. Linting and static type checking are integrated in the standard
 pytest_-managed testing.
 
