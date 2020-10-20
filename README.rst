@@ -29,17 +29,20 @@ To install the package for normal use in your application, use::
 
     $ pip install .
 
-To install the package for development, use::
-
-    $ pip install -r requirements.txt
-    $ pip install --editable . | { grep -v "already satisfied" || :; }
-
 To run the tests, use::
 
+    $ pip install -r requirements.test.txt
+    $ pip install --editable .
     $ python -m pytest
+
+or::
+
+    $ tox -e pytest-dev-py38
 
 For test-driven development, use::
 
+    $ pip install -r requirements.test.txt
+    $ pip install --editable .
     $ pytest-watch
 
 To enforce code formatting, install the git hook::
@@ -49,7 +52,11 @@ To enforce code formatting, install the git hook::
 
 To build the docs as html, use::
 
-    $ sphinx-build -b html docs build
+    $ tox -e pytest-html
+
+To build the docs as pdf, use::
+
+    $ tox -e pytest-pdf
 
 Pytest, mypy and flake8 are configured in the *setup.cfg* file. Sphinx and
 its plugins are configured in *docs/conf.py*.
