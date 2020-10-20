@@ -4,8 +4,6 @@ FrozenDict Readme
 .. image:: https://img.shields.io/badge/security-bandit-yellow.svg
     :target: https://github.com/PyCQA/bandit
     :alt: Security Status
-.. image:: https://github.com/ominatechnologies/frozendict/workflows/Test%20package/badge.svg
-    :alt: Tests Status
 
 .. inclusion-marker
 
@@ -63,10 +61,6 @@ To build the docs as pdf, use::
 
 Pytest, mypy and flake8 are configured in the *setup.cfg* file. Sphinx and
 its plugins are configured in *docs/conf.py*.
-
-Roadmap
--------
-See `<TODO.rst>`_.
 
 
 .. _flake8: http://flake8.pycqa.org

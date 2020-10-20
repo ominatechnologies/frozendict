@@ -30,6 +30,7 @@ setup(
     install_requires=install_requires,
     keywords=[
         "immutable",
+        "python",
         "type system",
     ],
     license="MIT",

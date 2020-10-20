@@ -8,7 +8,7 @@ version = release
 name = "frozendict"
 
 # capitalized label
-project = "FROZENDICT"
+project = "Frozendict"
 
 description = "A modern implementation of FrozenDict."
 author = "Omina Technologies"
