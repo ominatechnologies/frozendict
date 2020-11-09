@@ -223,10 +223,8 @@ class FrozenDict(Mapping[KT, VT_co]):
         return self._dict.values()
 
     def serialize(self) -> Mapping:
-        """
-        Serialize the FrozenDict. If underling values in the mapping have a
-        serialize function it will call it.
-        """
+        """Serialize the object to a form that can be passed to the
+        :func:`json.dumps` function."""
         return {str(k): (v.serialize() if getattr(v, "serialize", None) else v)
                 for k, v in self.items()}
 
