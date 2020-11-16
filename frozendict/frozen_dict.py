@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import (
-    Any, ClassVar, Dict, Iterator, Mapping, Optional, Set, TypeVar,
+    Any, ClassVar, Dict, Hashable, Iterator, Mapping, Optional, Set, TypeVar,
 )
 
 KT = TypeVar("KT")
@@ -118,7 +118,9 @@ class FrozenDict(Mapping[KT, VT_co]):
                     raise TypeError(msg.format(type(value)))
 
             # The given value should be hashable
-            assert isinstance(hash(tuple(sorted(value.items()))), int)
+            for key, val in value.items():
+                assert isinstance(key, Hashable)
+                assert isinstance(val, Hashable)
 
             if remove_none_values:
                 value = {k: v for k, v in value.items()
@@ -184,7 +186,11 @@ class FrozenDict(Mapping[KT, VT_co]):
     def __hash__(self):
         if self._hash_cache is not None:
             return self._hash_cache
-        rv = self._hash_cache = hash(tuple(sorted(self._dict.items())))
+        try:
+            items = sorted(self._dict.items())
+        except TypeError:
+            items = self._dict.items()
+        rv = self._hash_cache = hash(tuple(items))
         return rv
 
     def __iter__(self):
@@ -202,7 +208,10 @@ class FrozenDict(Mapping[KT, VT_co]):
             raise NotImplementedError()
 
     def __repr__(self):
-        return f"<FrozenDict {self._dict}>"
+        return self._dict.__repr__()
+
+    def __str__(self):
+        return self._dict.__str__()
 
     def copy(self):
         return self
