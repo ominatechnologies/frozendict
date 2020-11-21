@@ -119,8 +119,10 @@ class FrozenDict(Mapping[KT, VT_co]):
 
             # The given value should be hashable
             for key, val in value.items():
-                assert isinstance(key, Hashable)
-                assert isinstance(val, Hashable)
+                if not isinstance(key, Hashable):
+                    raise TypeError(f"The key '{key}' is not hashable.")
+                if not isinstance(val, Hashable):
+                    raise TypeError(f"The value '{val}' is not hashable.")
 
             if remove_none_values:
                 value = {k: v for k, v in value.items()
@@ -128,7 +130,7 @@ class FrozenDict(Mapping[KT, VT_co]):
             if homogeneous_type:
                 if not (has_homogeneous_type(value.keys())
                         and has_homogeneous_type(value.values())):
-                    raise TypeError
+                    raise TypeError()
             if no_copy:
                 self._dict = value
             else:

@@ -296,10 +296,8 @@ def test_repr():
     d = {'k_1': 0, 'k_2': 1}
     fd: FrozenDict[str, int] = FrozenDict(d)
     ffd: FrozenDict[str, FrozenDict[str, int]] = FrozenDict({'k_1': fd})
-    pfd = "<FrozenDict {'k_1': 0, 'k_2': 1}>"
-    pffd = "<FrozenDict {'k_1': <FrozenDict {'k_1': 0, 'k_2': 1}>}>"
-    assert fd.__repr__() == pfd
-    assert ffd.__repr__() == pffd
+    assert fd.__repr__() == "{'k_1': 0, 'k_2': 1}"
+    assert ffd.__repr__() == "{'k_1': {'k_1': 0, 'k_2': 1}}"
 
 
 def test_serialize():
