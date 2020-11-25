@@ -29,5 +29,12 @@ v1.2 - 2020-04-15
 - chore: Update dependencies.
 
 
+2020.11.25
+++++++++++
+- fix: Support Python 3.9.
+- fix: Various improvements and fixes.
+- chore: Update dependencies.
+
+
 Head
 ++++
