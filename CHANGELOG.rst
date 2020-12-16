@@ -36,5 +36,12 @@ v1.2 - 2020-04-15
 - chore: Update dependencies.
 
 
+2020.12.16
+++++++++++
+- test: Add a separate type checking tox env that produces more intelligible
+  error information compared to when using the pytest-mypy plugin.
+- chore: Update dependencies.
+
+
 Head
 ++++
