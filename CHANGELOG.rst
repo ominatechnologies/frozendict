@@ -43,5 +43,10 @@ v1.2 - 2020-04-15
 - chore: Update dependencies.
 
 
+2020.12.29
+++++++++++
+- chore: Update dependencies.
+
+
 Head
 ++++
