@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoCopyFrozenDict &#8212; Frozendict 2020.12.29 documentation</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Changelog" href="../changelog.html" />
+    <link rel="prev" title="FrozenDict" href="frozen_dict.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../index.html">
+    
+      <img src="../_static/logo_small.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../readme.html">Readme</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">FrozenDict API</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../changelog.html">Changelog</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Readme</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">FrozenDict API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="frozen_dict.html">FrozenDict</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NoCopyFrozenDict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#aliases">Aliases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="module-frozendict.no_copy_frozen_dict">
+<span id="nocopyfrozendict"></span><h1>NoCopyFrozenDict<a class="headerlink" href="#module-frozendict.no_copy_frozen_dict" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict">
+<em class="property">class </em><code class="sig-prename descclassname">frozendict.no_copy_frozen_dict.</code><code class="sig-name descname">NoCopyFrozenDict</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="frozen_dict.html#frozendict.frozen_dict.FrozenDict" title="frozendict.frozen_dict.FrozenDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">frozendict.frozen_dict.FrozenDict</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">frozendict.no_copy_frozen_dict.KT</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">frozendict.no_copy_frozen_dict.VT_co</span></code>]</p>
+<p>Instantiate a FrozenDict without making a copy of the given dictionary.</p>
+<p>WARNING: By definition it is not immutable but will perform better.
+A good usage would be when you instantiate a frozendict inline.
+Ex: NoCopyFrozenDict({k1:v1, k2:v2}) is safe and immutable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – A mapping from which to create a FrozenDict.</p></li>
+<li><p><strong>homogeneous_type</strong> – Option to check that all types in
+the dictionary are homogeneous, all keys should have the same
+type and all values should have the same type.</p></li>
+<li><p><strong>remove_none_values</strong> – Option to remove all None value from the
+given mapping.</p></li>
+<li><p><strong>no_copy</strong> – Option to enable the copy of the given mapping.</p></li>
+<li><p><strong>kwargs</strong> – You can use kwargs to instantiate a FrozenDict.
+Ex: FrozenDict(k1:v1, k2:v2)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="optional">[</span>, <em class="sig-param">d</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; D[k] if k in D, else d.  d defaults to None.<a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.intersection">
+<code class="sig-name descname">intersection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.intersection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.items">
+<code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D’s items<a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D’s keys<a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.serialize">
+<code class="sig-name descname">serialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize the object to a form that can be passed to the
+<a class="reference external" href="https://docs.python.org/3/library/json.html#json.dumps" title="(in Python v3.9)"><code class="xref py py-func docutils literal notranslate"><span class="pre">json.dumps()</span></code></a> function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Mapping</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.union">
+<code class="sig-name descname">union</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.union" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="frozendict.no_copy_frozen_dict.NoCopyFrozenDict.values">
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; an object providing a view on D’s values<a class="headerlink" href="#frozendict.no_copy_frozen_dict.NoCopyFrozenDict.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="frozen_dict.html" title="previous page">FrozenDict</a>
+    <a class='right-next' id="next-link" href="../changelog.html" title="next page">Changelog</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Omina Technologies.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
