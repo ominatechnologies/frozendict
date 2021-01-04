@@ -50,3 +50,4 @@ v1.2 - 2020-04-15
 
 Head
 ++++
+- fix: Minor updates.

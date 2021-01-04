@@ -6,7 +6,7 @@ from pytest import mark
 from frozendict import FrozenDict
 
 
-@mark.skip
+@mark.skip("Performance test.")
 def test_performance_a_1():
     repeat = 100000
     updates = 3
