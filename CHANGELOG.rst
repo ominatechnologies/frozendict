@@ -48,6 +48,11 @@ v1.2 - 2020-04-15
 - chore: Update dependencies.
 
 
+2021.01.07
+++++++++++
+- fix: Minor updates.
+
+
 Head
 ++++
 - fix: Minor updates.
