@@ -42,7 +42,7 @@ class FrozenDict(Mapping[KT, VT_co]):
             return args[0]
         else:
             # Initialize a new FrozenDict.
-            return super(FrozenDict, cls).__new__(cls)
+            return super().__new__(cls)
 
     def __getnewargs__(self):
         # When instantiating a frozendict object, the static `__new__` method
@@ -155,6 +155,32 @@ class FrozenDict(Mapping[KT, VT_co]):
 
     # -- System Methods --------------- --- --  -
 
+    def copy(self):
+        return self
+
+    def intersection(self, other):
+        return self.__and__(other)
+
+    def items(self):
+        return self._dict.items()
+
+    def keys(self):
+        return self._dict.keys()
+
+    def union(self, other):
+        return self.__or__(other)
+
+    def values(self):
+        return self._dict.values()
+
+    def serialize(self) -> Mapping:
+        """Serialize the object to a form that can be passed to the
+        :func:`json.dumps` function."""
+        return {str(k): (v.serialize() if getattr(v, "serialize", None) else v)
+                for k, v in self.items()}
+
+    # -- Magic Methods --------------- --- --  -
+
     def __and__(self, other):
         if isinstance(other, Dict):
             d = {k: v for k, v in self._dict.items() if k in other}
@@ -214,30 +240,6 @@ class FrozenDict(Mapping[KT, VT_co]):
 
     def __str__(self):
         return self._dict.__str__()
-
-    def copy(self):
-        return self
-
-    def intersection(self, other):
-        return self.__and__(other)
-
-    def items(self):
-        return self._dict.items()
-
-    def keys(self):
-        return self._dict.keys()
-
-    def union(self, other):
-        return self.__or__(other)
-
-    def values(self):
-        return self._dict.values()
-
-    def serialize(self) -> Mapping:
-        """Serialize the object to a form that can be passed to the
-        :func:`json.dumps` function."""
-        return {str(k): (v.serialize() if getattr(v, "serialize", None) else v)
-                for k, v in self.items()}
 
 
 frozendict = FrozenDict
