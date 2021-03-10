@@ -1,8 +1,8 @@
 # Testing requirements:
 #
-coverage==5.4
+coverage==5.5
 flake8==3.8.4
-mypy==0.800
+mypy==0.812
 pytest==6.2.2
 pytest-cov==2.11.1
 pytest-flake8==1.0.7
