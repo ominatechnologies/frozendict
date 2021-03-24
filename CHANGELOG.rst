@@ -53,5 +53,6 @@ v1.2 - 2020-04-15
 - fix: Minor updates.
 
 
-Head
-++++
+Branch `refactor_21`
+++++++++++++++++++++
+- Drop support for Python 3.7.
