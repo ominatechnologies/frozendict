@@ -57,3 +57,4 @@ Head
 ++++
 - fix: Minor updates.
 - chore: Update dependencies.
+- Drop support for Python 3.7.
