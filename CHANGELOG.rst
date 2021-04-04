@@ -2,15 +2,39 @@ Frozendict Changelog
 ====================
 .. inclusion-marker
 
-v1.0 - 2020-04-15
-+++++++++++++++++
-- Initial implementation of the 'FrozenDict' class.
-- Added 'AbstractDict' as alias of 'Mapping'.
+Head `refactor_21`
+++++++++++++++++++
+- Drop support for Python 3.7.
 
 
-v1.1 - 2020-04-13
-+++++++++++++++++
-- Add 'serialize' method.
+2021.01.07
+++++++++++
+- fix: Minor updates.
+
+
+2020.12.29
+++++++++++
+- chore: Update dependencies.
+
+
+2020.12.16
+++++++++++
+- test: Add a separate type checking tox env that produces more intelligible
+  error information compared to when using the pytest-mypy plugin.
+- chore: Update dependencies.
+
+
+2020.11.25
+++++++++++
+- fix: Support Python 3.9.
+- fix: Various improvements and fixes.
+- chore: Update dependencies.
+
+
+2020.10.14
+++++++++++
+- fix: Various minor improvements and fixes.
+- chore: Update dependencies.
 
 
 v1.2 - 2020-04-15
@@ -23,36 +47,12 @@ v1.2 - 2020-04-15
 - Various fixes.
 
 
-2020.10.14
-++++++++++
-- fix: Various minor improvements and fixes.
-- chore: Update dependencies.
+v1.1 - 2020-04-13
++++++++++++++++++
+- Add 'serialize' method.
 
 
-2020.11.25
-++++++++++
-- fix: Support Python 3.9.
-- fix: Various improvements and fixes.
-- chore: Update dependencies.
-
-
-2020.12.16
-++++++++++
-- test: Add a separate type checking tox env that produces more intelligible
-  error information compared to when using the pytest-mypy plugin.
-- chore: Update dependencies.
-
-
-2020.12.29
-++++++++++
-- chore: Update dependencies.
-
-
-2021.01.07
-++++++++++
-- fix: Minor updates.
-
-
-Branch `refactor_21`
-++++++++++++++++++++
-- Drop support for Python 3.7.
+v1.0 - 2020-04-15
++++++++++++++++++
+- Initial implementation of the 'FrozenDict' class.
+- Added 'AbstractDict' as alias of 'Mapping'.
