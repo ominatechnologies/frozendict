@@ -109,7 +109,7 @@ html_theme_options = {
 }
 html_logo = "_static/logo_small.png"
 
-# html_baseurl = "https://ominatechnologies.github.io/opyprint/"
+# html_baseurl = "https://ominatechnologies.github.io/frozendict/"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

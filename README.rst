@@ -32,7 +32,7 @@ To install the package for normal use in your application, use::
 
 To run the tests, use::
 
-    $ pip install -r requirements.test.txt
+    $ pip install -r requirements.dev.txt
     $ pip install --editable .
     $ python3 -m pytest
 
@@ -42,7 +42,7 @@ or::
 
 For test-driven development, use::
 
-    $ pip install -r requirements.test.txt
+    $ pip install -r requirements.dev.txt
     $ pip install --editable .
     $ pytest-watch
 
