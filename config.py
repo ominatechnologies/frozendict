@@ -1,17 +1,17 @@
 # Single-sourced project configuration values:
 
-# the full version, including alpha/beta/rc tags
-release = "2021.01.07"
+# The full version, including alpha/beta/rc tags:
+release = "2021.4.14"
 version = release
 
-# distribution package name
+# Distribution package name:
 name = "frozendict"
 
-# capitalized label
+# Capitalized label:
 project = "Frozendict"
 
 description = "A modern implementation of FrozenDict."
 author = "Omina Technologies"
 author_email = "info@ominatechnologies.com"
-copyright = "2020, Omina Technologies"
+copyright = "2021, Omina Technologies"
 repo = "https://github.com/ominatechnologies/frozendict"
