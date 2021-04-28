@@ -1,11 +1,11 @@
 # Testing requirements:
 #
 coverage==5.5
-flake8==3.8.4
+flake8==3.9.1
 mypy==0.812
-pytest==6.2.2
+pytest==6.2.3
 pytest-cov==2.11.1
 pytest-flake8==1.0.7
-pytest-mypy==0.8.0
+pytest-mypy==0.8.1
 # pytest-watch==4.2.0
 git+https://github.com/wouter-vdb/pytest-watch@2021.01.29#egg=pytest-watch
