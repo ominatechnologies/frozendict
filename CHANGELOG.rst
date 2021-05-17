@@ -6,6 +6,11 @@ Head
 ++++
 
 
+2021.5.17
+++++++++++
+- chore: Update dependencies.
+
+
 2021.4.14
 +++++++++
 - Drop support for Python 3.7.
