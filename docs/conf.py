@@ -35,7 +35,7 @@ repo = config.repo
 version = config.version
 
 # If your documentation needs a minimal Sphinx version, state it here.
-needs_sphinx = '3.5.4'
+needs_sphinx = '4.0.2'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
@@ -106,6 +106,7 @@ html_theme_options = {
     # "github_url": "https://github.com/pandas-dev/pandas",
     # "twitter_url": "https://twitter.com/pandas_dev",
     # "google_analytics_id": "UA-27880019-2",
+    # "show_toc_level": 2,
 }
 html_logo = "_static/logo_small.png"
 
@@ -248,7 +249,7 @@ math_numfig = True
 
 # See https://www.sphinx-doc.org/en/master/usage/extensions/math.html#module-
 # sphinx.ext.mathjax
-mathjax_config = {
+mathjax3_config = {
     'TeX': {
         'Macros': latex_commands,
     },
