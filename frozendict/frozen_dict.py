@@ -9,8 +9,7 @@ VT_co = TypeVar("VT_co", covariant=True)
 
 
 class FrozenDict(Mapping[KT, VT_co]):
-    """
-    An immutable dictionary that implements :py:class:`typing.Mapping`
+    """An immutable dictionary that implements :py:class:`typing.Mapping`
     protocol for python 3.
     """
 
