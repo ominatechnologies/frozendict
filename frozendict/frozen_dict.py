@@ -7,6 +7,12 @@ from typing import (
 KT = TypeVar("KT")
 VT_co = TypeVar("VT_co", covariant=True)
 
+__OPTIONAL_KEYS__: Set[str] = {
+    "homogeneous_type",
+    "remove_none_values",
+    "no_copy",
+}
+
 
 class FrozenDict(Mapping[KT, VT_co]):
     """An immutable dictionary that implements :py:class:`typing.Mapping`
@@ -16,11 +22,6 @@ class FrozenDict(Mapping[KT, VT_co]):
     # -- Class Initialization --------------- --- --  -
 
     _empty_frozendict: ClassVar[Optional[FrozenDict]] = None
-    _optional_keys: ClassVar[Set[str]] = {
-        "homogeneous_type",
-        "remove_none_values",
-        "no_copy",
-    }
 
     # -- Instance Initialization --------------- --- --  -
 
@@ -31,7 +32,7 @@ class FrozenDict(Mapping[KT, VT_co]):
 
     def __new__(cls, *args, **kwargs):
         if ((len(args) == 0 or args[0] is None or len(args[0]) == 0)
-                and len(set(kwargs.keys()) - cls._optional_keys) == 0):
+                and len(set(kwargs.keys()) - __OPTIONAL_KEYS__) == 0):
             # Return the same empty frozendict:
             if cls._empty_frozendict is None:
                 cls._empty_frozendict = super(FrozenDict, cls).__new__(cls)
@@ -46,9 +47,8 @@ class FrozenDict(Mapping[KT, VT_co]):
     def __getnewargs__(self):
         # When instantiating a frozendict object, the static `__new__` method
         # is called with the arguments passed to the constructor. When the
-        # `args` argument is "empty", the `__new__` method can return the
-        # "empty" frozendict singleton in the same way that instantiating an
-        # "empty" frozenset results in the same "empty" frozenset singleton.
+        # `args` argument is "empty" then the "empty" frozendict singleton in
+        # returned.
         #
         # However, when unpickling a class instance, the static `__new__`
         # method is called without arguments to instantiate a "fresh" instance.
@@ -139,7 +139,7 @@ class FrozenDict(Mapping[KT, VT_co]):
             assert isinstance(hash(tuple(sorted(kwargs.items()))), int)
 
             buildable_kwargs = {k: v for k, v in kwargs.items()
-                                if k not in self._optional_keys}
+                                if k not in __OPTIONAL_KEYS__}
             if remove_none_values:
                 buildable_kwargs = {k: v for k, v in buildable_kwargs.items()
                                     if v is not None}
@@ -149,7 +149,7 @@ class FrozenDict(Mapping[KT, VT_co]):
                                 buildable_kwargs.values()))):
                 raise TypeError
             self._dict = dict(**buildable_kwargs)
-        else:
+        elif not hasattr(self, "_dict"):
             self._dict = dict()
 
     # -- System Methods --------------- --- --  -

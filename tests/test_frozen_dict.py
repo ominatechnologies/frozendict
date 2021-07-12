@@ -155,6 +155,7 @@ def test_len():
 
 
 def test_singleton():
+    assert FrozenDict() is FrozenDict._empty_frozendict
     assert FrozenDict() is FrozenDict()
     assert FrozenDict() is FrozenDict({})
     assert FrozenDict({}) is FrozenDict()
