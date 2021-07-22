@@ -7,8 +7,18 @@ Head
 ++++
 
 
-2021.5.17
+2021.07.22
 ++++++++++
+- refactor: Drop (explicit) support for Python 3.7.
+- fix: Various minor updates.
+- fix: Reverse the change logs order.
+- test: Provide a new/updated set of test commands that use tox-based test
+  environments.
+- chore: Update dependencies.
+
+
+2021.5.17
++++++++++
 - chore: Update dependencies.
 
 
