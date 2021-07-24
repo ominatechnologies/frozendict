@@ -5,6 +5,8 @@ Frozendict Changelog
 
 Head
 ++++
+- feat: Add the `update(mapping)` method.
+- doc: Add documentation.
 
 
 2021.07.22

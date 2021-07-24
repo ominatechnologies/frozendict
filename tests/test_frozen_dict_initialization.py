@@ -137,23 +137,6 @@ def test_init_no_none_value():
     assert fd.get('k_1') == 0
 
 
-def test_get():
-    fd: FrozenDict[str, int] = FrozenDict({'k_1': 0})
-    assert fd.get('k_1') == 0
-    assert not fd.get('k_2')
-
-
-def test_len():
-    fd1: FrozenDict = FrozenDict()
-    assert len(fd1) == 0
-
-    fd2: FrozenDict[str, int] = FrozenDict({'k_1': 0})
-    assert len(fd2) == 1
-
-    fd3: FrozenDict[str, int] = FrozenDict({'k_1': 0, 'k_2': 1})
-    assert len(fd3) == 2
-
-
 def test_singleton():
     assert FrozenDict() is FrozenDict._empty_frozendict
     assert FrozenDict() is FrozenDict()
@@ -198,51 +181,6 @@ def test_hash_2():
     d_2 = {'k_3': d_1}
     with raises(TypeError):
         FrozenDict(d_2)
-
-
-def test_keys():
-    d = {'k_1': 0, 'k_2': 1}
-    fd: FrozenDict[str, int] = FrozenDict(d)
-    assert fd.keys() == d.keys()
-
-
-def test_items():
-    d = {'k_1': 0, 'k_2': 1}
-    fd: FrozenDict[str, int] = FrozenDict(d)
-    assert fd.items() == d.items()
-
-
-def test_values():
-    d = {'k_1': 0, 'k_2': 1}
-    fd: FrozenDict[str, int] = FrozenDict(d)
-    assert list(fd.values()) == list(d.values())
-
-
-def test_union():
-    d = {'k_1': 0, 'k_2': 1}
-    assert FrozenDict({'k_1': 0}) | FrozenDict({'k_2': 1}) == d
-    assert FrozenDict({'k_1': 0}) | {'k_2': 1} == d
-    assert FrozenDict({'k_1': 0}).union(FrozenDict({'k_2': 1})) == d
-    assert FrozenDict({'k_1': 0}).union({'k_2': 1}) == d
-
-    with raises(NotImplementedError):
-        FrozenDict() | ('k_1', 0)
-    with raises(NotImplementedError):
-        FrozenDict().union(('k_1', 0))
-
-
-def test_intersection():
-    d1 = {'k_1': 0, 'k_2': 1}
-    d2 = {'k_1': 0, 'k_3': 2}
-    assert FrozenDict(d1) & FrozenDict(d2) == {'k_1': 0}
-    assert FrozenDict(d1) & d2 == {'k_1': 0}
-    assert FrozenDict(d1).intersection(FrozenDict(d2)) == {'k_1': 0}
-    assert FrozenDict(d1).intersection(d2) == {'k_1': 0}
-
-    with raises(NotImplementedError):
-        FrozenDict() & ('k_1', 0)
-    with raises(NotImplementedError):
-        FrozenDict().intersection(('k_1', 0))
 
 
 def test_immutable():
@@ -291,24 +229,6 @@ def test_immutable_no_copy_1():
     assert isinstance(fd_3, FrozenDict)
     assert d.get('k_3') == 3
     assert fd_3.get('k').get('k_3') == 3
-
-
-def test_repr():
-    d = {'k_1': 0, 'k_2': 1}
-    fd: FrozenDict[str, int] = FrozenDict(d)
-    ffd: FrozenDict[str, FrozenDict[str, int]] = FrozenDict({'k_1': fd})
-    assert fd.__repr__() == "{'k_1': 0, 'k_2': 1}"
-    assert ffd.__repr__() == "{'k_1': {'k_1': 0, 'k_2': 1}}"
-
-
-def test_serialize():
-    d = {'k_1': 0, 'k_2': 1}
-    fd: FrozenDict[str, int] = FrozenDict(d)
-    ffd: FrozenDict[str, FrozenDict[str, int]] = FrozenDict({'k_1': fd})
-    s_fd: Mapping[str, int] = fd.serialize()
-    s_ffd: Mapping[str, Mapping[str, int]] = ffd.serialize()
-    assert s_fd == d
-    assert s_ffd == {'k_1': d}
 
 
 def test_typing_1():

@@ -15,8 +15,8 @@ __OPTIONAL_KEYS__: Set[str] = {
 
 
 class FrozenDict(Mapping[KT, VT_co]):
-    """An immutable dictionary that implements :py:class:`typing.Mapping`
-    protocol for python 3.
+    """An immutable dictionary that implements the "py:class:`~typing.Mapping`
+    protocol and other :py:class:`~dict` methods.
     """
 
     # -- Class Initialization --------------- --- --  -
@@ -28,7 +28,7 @@ class FrozenDict(Mapping[KT, VT_co]):
     __slots__ = ["_hash_cache", "_dict"]
 
     _hash_cache: Optional[int]
-    _dict: Mapping[KT, VT_co]
+    _dict: Dict[KT, VT_co]
 
     def __new__(cls, *args, **kwargs):
         if ((len(args) == 0 or args[0] is None or len(args[0]) == 0)
@@ -82,8 +82,7 @@ class FrozenDict(Mapping[KT, VT_co]):
                  remove_none_values: bool = False,
                  no_copy: bool = False,
                  **kwargs):
-        """
-        Instantiate a FrozenDict.
+        """Instantiate a FrozenDict.
 
         :param value: A mapping from which to create a FrozenDict.
         :param homogeneous_type: Option to check that all types in
@@ -101,9 +100,7 @@ class FrozenDict(Mapping[KT, VT_co]):
         self._hash_cache = None
 
         def has_homogeneous_type(i) -> bool:
-            """
-            Check that the iterator contains only the same type
-            """
+            """Check that the iterator contains only the same type."""
             iterator: Iterator[Any] = iter(i)
             first_type: Any = type(next(iterator, None))
             return all(type(x) is first_type for x in iterator)
@@ -152,31 +149,62 @@ class FrozenDict(Mapping[KT, VT_co]):
         elif not hasattr(self, "_dict"):
             self._dict = dict()
 
-    # -- System Methods --------------- --- --  -
+    # -- Dict Methods --------------- --- --  -
 
     def copy(self):
+        """Returns the immutable dictionary."""
         return self
 
-    def intersection(self, other):
-        return self.__and__(other)
-
     def items(self):
+        """Returns a copy of the dictionary’s list of (key, value) pairs."""
         return self._dict.items()
 
     def keys(self):
+        """Returns a copy of the dictionary’s list of keys."""
         return self._dict.keys()
 
-    def union(self, other):
-        return self.__or__(other)
+    def update(self, mapping: Mapping) -> FrozenDict:
+        """Returns a new immutable dict that contains the key:value elements
+        from this dict, updated with the key:value elements from the given
+        mapping.
+
+        Note that this method is not compatible with the `dict.update` method,
+        which updates the dictionary in-place (destructively), while this
+        method is non-destructive.
+
+        :param mapping: Required. Either another dictionary object or an
+            iterable of key:value pairs (iterables of length two). If keyword
+            arguments are specified, the dictionary is then updated with those
+            key:value pairs.
+        :return: The new frozen dictionary.
+
+        TODO: Should `homogeneous_type` or `remove_none_values` be supported ?
+        """
+        updated = self._dict.copy()
+        updated.update(mapping)
+        return FrozenDict(updated)
 
     def values(self):
+        """Returns a copy of the dictionary’s list of values."""
         return self._dict.values()
+
+    # -- Custom Methods --------------- --- --  -
+
+    def intersection(self, other):
+        """Returns the intersection of the given dictionaries. Equivalent to
+        `self & other`."""
+        return self.__and__(other)
 
     def serialize(self) -> Mapping:
         """Serialize the object to a form that can be passed to the
         :func:`json.dumps` function."""
         return {str(k): (v.serialize() if getattr(v, "serialize", None) else v)
                 for k, v in self.items()}
+
+    def union(self, other):
+        """Returns the union of the given dictionaries. Equivalent to
+        `self | other`."""
+        return self.__or__(other)
 
     # -- Magic Methods --------------- --- --  -
 
