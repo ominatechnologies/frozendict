@@ -1,6 +1,8 @@
-from setuptools import find_packages, setup
+import pathlib
 
+import pkg_resources
 from config import author, author_email, description, name, release, repo
+from setuptools import find_packages, setup
 
 
 def readme():
@@ -9,9 +11,12 @@ def readme():
 
 
 # 3rd-party run-time requirements:
-install_requires = [
-    "typing-extensions==3.10.0.0",
-]
+with pathlib.Path('requirements.txt').open() as requirements_txt:
+    install_requires = [
+        str(requirement)
+        for requirement
+        in pkg_resources.parse_requirements(requirements_txt)
+    ]
 
 setup(
     author=author,
