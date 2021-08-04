@@ -27,7 +27,8 @@ jobs:
       - name: push new tag
         run: |
           tag=$(date '+%Y.%m.%d')
-          message="${tag}: PR #${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}"
+          msg=$(echo release)
+          message="${tag}: \n${msg}"
 
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
