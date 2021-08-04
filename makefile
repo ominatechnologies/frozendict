@@ -1,15 +1,6 @@
 #!make
 
 SHELL = /bin/sh
-PACKAGE = ocore
-
-ifdef k
-	PYTEST_FLAGS = -k $(k)
-endif
-
-ifeq (s,$(findstring s,$(MAKEFLAGS)))
-	PYTEST_FLAGS := ${PYTEST_FLAGS} -s
-endif
 
 # COLORS
 GREEN  := $(shell tput -Txterm setaf 2)
@@ -38,7 +29,7 @@ help:
 
 # -- Setup Commands --------------- --- --  -
 
-## Initialize the jai-dev environment.
+## Initialize environment.
 install: install-tools install-pre-commit
 
 install-tools:
@@ -49,10 +40,10 @@ install-tools:
 	@venv/bin/pip install -r requirements.dev.txt
 	@venv/bin/pip install .
 
-## Reinstall jai-dev environment
+## Reinstall environment
 reinstall: clean-environment install
 
-## Remove jai-dev environment
+## Clean environment
 clean-environment:
 	@venv/bin/pip freeze | grep -v "@" | xargs venv/bin/pip uninstall -y
 	@venv/bin/pip uninstall -y frozendict pytest-watch
