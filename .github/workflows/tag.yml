@@ -30,7 +30,7 @@ jobs:
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
-          # Tag and it's message
+          # Tag and its message
           bumpver update -n
           eval $(bumpver show -n --env)
           changes=$(sed -n '/^++++$/,/^++++++++/p' CHANGELOG.rst | sed '1d;$d' | sed '$d')
