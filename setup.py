@@ -1,7 +1,7 @@
 import pathlib
 
 import pkg_resources
-from config import author, author_email, description, name, release, repo
+from config import author, author_email, description, name, repo
 from setuptools import find_packages, setup
 
 
@@ -46,6 +46,5 @@ setup(
     packages=find_packages(),
     python_requires=">=3.8.7",
     url=repo,
-    version=release,
     zip_safe=False,
 )
