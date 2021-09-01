@@ -1,5 +1,9 @@
 # Single-sourced project configuration values:
 
+# The full version, including alpha/beta/rc tags:
+release = "2021.08.04"
+version = release
+
 # Distribution package name:
 name = "frozendict"
 
