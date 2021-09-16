@@ -36,9 +36,7 @@ install-tools:
 	@python3.8 -V
 	@pip3.8 install -U pip setuptools wheel tox pre-commit
 	@python3.8 -m venv venv
-	@venv/bin/pip install -U pip setuptools wheel
-	@venv/bin/pip install -r requirements.dev.txt
-	@venv/bin/pip install .
+	@venv/bin/pip install -U pip setuptools wheel -r requirements.dev.txt -e .
 
 ## Reinstall environment
 reinstall: clean-environment install
