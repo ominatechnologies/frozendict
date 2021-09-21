@@ -19,45 +19,42 @@ and 3.9.
 This project uses pytest_ as testing framework and our code provides type
 hinting (see PEP-484_ and PEP-561_) to enable static type checking using mypy_.
 For test-driven development, we use pytest-watch_. We use flake8_ for code
-linting. Linting and static type checking are integrated in the standard
-pytest_-managed testing.
+linting.
 
 This project uses sphinx_ to generate its documentation. To be able to build
 the docs as latex/pdf, you need to install the proper tex tools.
 On MacOS, install MacTex_ and latexmk_.
 
-To install the package for normal use in your application, use::
+To install a virtual environment with all the necessary packages and tools use
+the following command::
 
-    $ pip install .
+    $ make install
 
-To run the tests, use::
+There are other commands in the makefile, to see them run::
 
-    $ pip install -r requirements.dev.txt
-    $ pip install --editable .
-    $ python3 -m pytest
+    $ make help
 
-or::
+NOTE: Do not forget to activate your virtual environment in your terminal.
 
-    $ tox -e pytest-dev-py38
+You can run tests and tools with::
 
-For test-driven development, use::
+    $ (venv) pytest
+    $ (venv) mypy frozendict
+    $ (venv) flake8 frozendict tests
+    $ (venv) pytest-watch
+    $ (venv) coverage run -m pytest
+    $ (venv) coverage report
 
-    $ pip install -r requirements.dev.txt
-    $ pip install --editable .
-    $ pytest-watch
+We also use tox to test and produce documentation, you can check available
+configured environment by running::
 
-To enforce code formatting, install the git hook::
+    $ tox -l
 
-    $ flake8 --install-hook git
-    $ git config --bool flake8.strict true
-
-To build the docs as html, use::
-
-    $ tox -e pytest-html
-
-To build the docs as pdf, use::
-
-    $ tox -e pytest-pdf
+FYI:
+    - local: it means that it use the version you have checkout locally
+    - dev: it means that it will use the version from main
+    - prod: it means that it will use the version given in the setup.py
+    - test: it means that it will run pytest, mypy and flake8
 
 Pytest, mypy and flake8 are configured in the *setup.cfg* file. Sphinx and
 its plugins are configured in *docs/conf.py*.
