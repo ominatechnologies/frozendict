@@ -35,6 +35,9 @@ There are other commands in the makefile, to see them run::
     $ make help
 
 NOTE: Do not forget to activate your virtual environment in your terminal.
+Example::
+
+    $ source venv/bin/activate
 
 You can run tests and tools with::
 
@@ -49,6 +52,10 @@ We also use tox to test and produce documentation, you can check available
 configured environment by running::
 
     $ tox -l
+
+You can then run the selected environment with::
+
+    $ tox -e selected_environment
 
 FYI:
     - local: it means that it will use the version you have checked out locally
