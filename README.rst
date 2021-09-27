@@ -57,12 +57,6 @@ You can then run the selected environment with::
 
     $ tox -e selected_environment
 
-FYI:
-    - local: it means that it will use the version you have checked out locally
-    - dev: it means that it will use the version from main
-    - prod: it means that it will use the version given in the setup.py
-    - test: it means that it will run pytest, mypy and flake8
-
 Pytest, mypy and flake8 are configured in the *setup.cfg* file. Sphinx and
 its plugins are configured in *docs/conf.py*.
 
