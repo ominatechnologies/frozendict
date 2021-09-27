@@ -23,6 +23,10 @@ jobs:
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.dev.txt') }}
       - name: Install dependencies
         run: pip install -U pip setuptools wheel bumpver -r requirements.dev.txt -e .
+      - name: Lint
+        run: flake8
+      - name: Type checking
+        run: mypy frozendict tests
       - name: Test with pytest
         run: pytest
       - name: push new tag
