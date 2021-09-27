@@ -51,7 +51,7 @@ configured environment by running::
     $ tox -l
 
 FYI:
-    - local: it means that it use the version you have checkout locally
+    - local: it means that it will use the version you have checked out locally
     - dev: it means that it will use the version from main
     - prod: it means that it will use the version given in the setup.py
     - test: it means that it will run pytest, mypy and flake8
