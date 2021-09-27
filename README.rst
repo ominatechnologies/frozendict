@@ -42,8 +42,8 @@ Example::
 You can run tests and tools with::
 
     $ (venv) pytest
-    $ (venv) mypy frozendict
-    $ (venv) flake8 frozendict tests
+    $ (venv) mypy frozendict tests
+    $ (venv) flake8
     $ (venv) pytest-watch
     $ (venv) coverage run -m pytest
     $ (venv) coverage report
