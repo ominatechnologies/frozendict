@@ -36,8 +36,8 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
           # Tag and its message
-          bumpver update -n
-          eval $(bumpver show -n --env)
+          bumpver update
+          eval $(bumpver show --env)
           changes=$(sed -n '/^++++$/,/^++++++++/p' CHANGELOG.rst | sed '1d;$d' | sed '$d')
           message=$(echo -e "\n${changes}")
 

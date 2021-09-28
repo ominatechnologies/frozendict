@@ -5,39 +5,51 @@ Frozendict Changelog
 
 Head
 ++++
+- fix: prevent tagging failure from merging not rebased branch
 
 2021.9.27.3
 +++++++++++
+- infra: update flake8 config for .eggs
 
 2021.9.27.2
 +++++++++++
+- infra: update CI with linting and type checking
 
 2021.9.27.1
 +++++++++++
+- infra: update flake8 config
 
 2021.9.27
 +++++++++
+- infra: update readme
 
 2021.9.16
 +++++++++
+- infra: update pipelines with pip cache
 
 2021.9.11
 +++++++++
+- fix: Drop stale environment variables.
 
 2021.9.10
 +++++++++
+- infra: update tox (alphabetically ordering)
 
 2021.9.8
 ++++++++
+- infra: Update tox
 
 2021.9.1.2
 ++++++++++
+- chore: move typing-extensions to dev requirements
 
 2021.9.1.1
 ++++++++++
+- infra: fix auto tagging
 
 2021.9.1
 ++++++++
+- fix: auto tagging
 
 2021.08.04
 ++++++++++
