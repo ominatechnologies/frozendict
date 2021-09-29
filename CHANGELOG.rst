@@ -6,6 +6,9 @@ Frozendict Changelog
 Head
 ++++
 
+2021.9.29
++++++++++
+
 2021.9.28
 +++++++++
 - fix: prevent tagging failure from merging not rebased branch
