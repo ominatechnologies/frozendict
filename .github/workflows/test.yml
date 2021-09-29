@@ -28,7 +28,9 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.dev.txt') }}
       - name: Install dependencies
-        run: pip install -U pip setuptools wheel -r requirements.dev.txt -e .
+        run: pip install -U pip setuptools wheel pre-commit -r requirements.dev.txt -e .
+      - name: pre-commit
+        run: pre-commit run --from-ref origin/main --to-ref HEAD
       - name: Lint
         run: flake8
       - name: Type checking
