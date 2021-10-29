@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2021.10.29
+++++++++++
 - feat: Add i18n for error strings.
 
 2021.9.29
