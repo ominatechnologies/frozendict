@@ -1,6 +1,7 @@
 # test_performance_a
 
 from datetime import datetime
+
 from pytest import mark
 
 from frozendict import FrozenDict

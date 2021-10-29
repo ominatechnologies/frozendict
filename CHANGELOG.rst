@@ -2,12 +2,13 @@ Frozendict Changelog
 ====================
 .. inclusion-marker
 
-
 Head
 ++++
+- feat: Add i18n for error strings.
 
 2021.9.29
 +++++++++
+- infra: add pre-commit check on the CI (#13)
 
 2021.9.28
 +++++++++

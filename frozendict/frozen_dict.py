@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from gettext import gettext as _
 from typing import (
     Any, ClassVar, Dict, Hashable, Iterator, Mapping, Optional, Set, TypeVar,
 )
@@ -110,15 +111,17 @@ class FrozenDict(Mapping[KT, VT_co]):
                 if isinstance(value, Mapping):
                     value = dict(value)
                 else:
-                    msg = "Expected a mapping as value, got a {}."
+                    msg = _("Expected a mapping as value, got a {}.")
                     raise TypeError(msg.format(type(value)))
 
             # The given value should be hashable
             for key, val in value.items():
                 if not isinstance(key, Hashable):
-                    raise TypeError(f"The key '{key}' is not hashable.")
+                    msg = _("The key '{}' (of type: {}) is not hashable.")
+                    raise TypeError(msg.format(key, type(key).__name__))
                 if not isinstance(val, Hashable):
-                    raise TypeError(f"The value '{val}' is not hashable.")
+                    msg = _("The value '{}' (of type: {}) is not hashable.")
+                    raise TypeError(msg.format(key, type(key).__name__))
 
             if remove_none_values:
                 value = {k: v for k, v in value.items()
