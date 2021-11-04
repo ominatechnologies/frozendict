@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2021.11.4
++++++++++
 - fix: CI python cache
 
 2021.10.29
