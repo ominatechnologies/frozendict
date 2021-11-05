@@ -4,7 +4,7 @@ import pkg_resources
 from setuptools import setup
 
 # 3rd-party run-time requirements:
-with pathlib.Path('requirements.txt').open() as requirements_txt:
+with pathlib.Path("requirements.txt").open() as requirements_txt:
     install_requires = [
         str(requirement)
         for requirement
