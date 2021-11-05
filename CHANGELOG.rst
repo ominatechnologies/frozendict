@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- fix: tagging CI
 
 2021.11.4
 +++++++++

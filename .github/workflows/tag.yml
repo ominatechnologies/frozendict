@@ -34,8 +34,8 @@ jobs:
       - name: push new tag
         run: |
           # Git config
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "GITHUB ACTION"
+          git config user.email "scott.tiger@ominatechnologies.com"
 
           # Tag and its message
           bumpver update
@@ -51,8 +51,7 @@ jobs:
           git commit --amend --no-edit
 
           # Tag the commit
-          git tag -a "${CURRENT_VERSION}" -m "${message}" -f
+          git tag -a "${CURRENT_VERSION}" -m "${message}"
 
           # Push commit and tag
-          git push origin
-          git push origin "${CURRENT_VERSION}"
+          git push --atomic origin main "${CURRENT_VERSION}"
