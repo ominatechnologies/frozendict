@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2021.11.8
++++++++++
 - fix: The pytest-watch extensions should be listed on one line.
 
 2021.11.5
