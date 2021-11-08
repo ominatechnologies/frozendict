@@ -40,7 +40,7 @@ jobs:
       - name: push new tag
         run: |
           # Git config
-          git config user.name "GITHUB ACTION"
+          git config user.name "GitHub Actions"
           git config user.email "scott.tiger@ominatechnologies.com"
 
           # Tag and its message
