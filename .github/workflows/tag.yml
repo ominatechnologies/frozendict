@@ -1,18 +1,24 @@
 name: Tag package
 
 on:
-  push:
-    branches:
-      - main
+   pull_request:
+     types:
+       - closed
+     branches:
+       - main
 
 jobs:
-  test:
+  tag:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+
+    if: github.event.pull_request.merged == true
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.SSH_KEY }}
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -34,7 +40,7 @@ jobs:
       - name: push new tag
         run: |
           # Git config
-          git config user.name "GITHUB ACTION"
+          git config user.name "GitHub Actions"
           git config user.email "scott.tiger@ominatechnologies.com"
 
           # Tag and its message
