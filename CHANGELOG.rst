@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2021.11.9
++++++++++
 - feature: tagging in CI with branch protection rules
 
 2021.11.8
