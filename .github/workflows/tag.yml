@@ -44,9 +44,10 @@ jobs:
           # Git config
           git config user.name "GitHub Actions"
           git config user.email "scott.tiger@ominatechnologies.com"
+          git pull -r -n
 
           # Tag and its message
-          bumpver update
+          bumpver update -n
           tag=$(git show -s --format=%s | cut -c 16-)
           changes=$(sed -n '/^++++$/,/^++++++++/p' CHANGELOG.rst | sed '1d;$d' | sed '$d')
           message=$(echo -e "\n$changes")
