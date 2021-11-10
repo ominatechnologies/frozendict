@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
-    if: github.actor == ScottTiger-Omina
+    if: github.actor == 'ScottTiger-Omina'
 
     steps:
       - name: Checkout code
