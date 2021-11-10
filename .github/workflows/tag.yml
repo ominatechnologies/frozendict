@@ -47,7 +47,7 @@ jobs:
 
           # Tag and its message
           bumpver update
-          eval $(bumpver show --env)
+          eval $(bumpver show -n --env)
           changes=$(sed -n '/^++++$/,/^++++++++/p' CHANGELOG.rst | sed '1d;$d' | sed '$d')
           message=$(echo -e "\n${changes}")
 
