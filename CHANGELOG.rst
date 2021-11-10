@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2021.11.10.1
+++++++++++++
 - fix: bumpver
 - fix: caching for pre-commit.
 
