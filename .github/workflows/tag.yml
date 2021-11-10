@@ -11,8 +11,6 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      PRE_COMMIT_HOME: ${{ env.pythonLocation }}
 
     if: github.event.pull_request.merged == true
 
@@ -33,6 +31,8 @@ jobs:
         run: pip install -U pip setuptools wheel pre-commit bumpver -r requirements.dev.txt -e .
       - name: pre-commit
         run: pre-commit run --all-files
+        env:
+          PRE_COMMIT_HOME: ${{ env.pythonLocation }}
       - name: Lint
         run: flake8
       - name: Type checking
