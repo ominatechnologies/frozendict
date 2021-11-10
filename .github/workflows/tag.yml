@@ -47,19 +47,19 @@ jobs:
 
           # Tag and its message
           bumpver update
-          eval $(bumpver show -n --env)
+          tag=$(git show -s --format=%s | cut -c 16-)
           changes=$(sed -n '/^++++$/,/^++++++++/p' CHANGELOG.rst | sed '1d;$d' | sed '$d')
-          message=$(echo -e "\n${changes}")
+          message=$(echo -e "\n$changes")
 
           # Finalize changelog
-          sed -i "s/^++++$/++++\n\n${CURRENT_VERSION}\n$(printf '+%.0s' $(seq 2 $(echo ${CURRENT_VERSION} | wc -c | tr -d ' ')))/" CHANGELOG.rst
+          sed -i "s/^++++$/++++\n\n$tag\n$(printf '+%.0s' $(seq 2 $(echo $tag | wc -c | tr -d ' ')))/" CHANGELOG.rst
 
           # Commit changes
           git add CHANGELOG.rst
           git commit --amend --no-edit
 
           # Tag the commit
-          git tag -a "${CURRENT_VERSION}" -m "${message}"
+          git tag -a "$tag" -m "$message"
 
           # Push commit and tag
-          git push --atomic origin main "${CURRENT_VERSION}"
+          git push --atomic origin main "$tag"
