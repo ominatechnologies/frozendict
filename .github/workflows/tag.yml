@@ -18,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ssh-key: ${{ secrets.SSH_KEY }}
+          token: ${{ secrets.GIT_PAT }}
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -31,6 +31,8 @@ jobs:
         run: pip install -U pip setuptools wheel pre-commit bumpver -r requirements.dev.txt -e .
       - name: pre-commit
         run: pre-commit run --all-files
+        env:
+          PRE_COMMIT_HOME: ${{ env.pythonLocation }}
       - name: Lint
         run: flake8
       - name: Type checking
