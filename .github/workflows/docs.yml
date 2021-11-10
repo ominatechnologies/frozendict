@@ -11,6 +11,9 @@ jobs:
     name: Build and publish the docs
     runs-on: ubuntu-latest
     timeout-minutes: 5
+
+    if: github.actor == ScottTiger-Omina
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,12 +24,9 @@ jobs:
         with:
           python-version: 3.8
       - name: Install tox
-        run: |
-          python -m pip install --upgrade pip
-          pip install tox
+        run: pip install -U pip tox
       - name: Build the docs
-        run: |
-          tox -e docs-html
+        run: tox -e docs-html
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
