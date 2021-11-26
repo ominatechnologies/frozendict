@@ -1,9 +1,8 @@
 # Testing requirements:
-coverage>=5.5
-flake8>=3.9.2
+coverage>=6.1
+flake8>=4.0.1
 mypy>=0.910
-pytest>=6.2.4
-types-colorama>=0.4.2
-types-pytz>=2021.1.0
-types-pyyaml>=5.4.3
-typing-extensions>=3.10.0.2
+pytest>=6.2.5
+types-colorama>=0.4.4
+types-pytz>=2021.3.1
+typing-extensions>=4.0
