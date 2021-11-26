@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- chore: update requirements
 
 2021.11.10.1
 ++++++++++++
