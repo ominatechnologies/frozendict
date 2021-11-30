@@ -14,13 +14,13 @@ class Foo:
 
 
 def test_typing_1():
-    dct: Dict[str, float] = {'k_1': 1.0}
+    dct: Dict[str, float] = {"k_1": 1.0}
     fd: NoCopyFrozenDict[str, float] = NoCopyFrozenDict(dct)
     assert fd == dct
 
 
 def test_typing_2():
-    dct: Dict[str, float] = {'k_1': 1.0}
+    dct: Dict[str, float] = {"k_1": 1.0}
 
     def check(fd: NoCopyFrozenDict[str, float]):
         assert fd == dct
@@ -29,7 +29,7 @@ def test_typing_2():
 
 
 def test_typing_3():
-    dct: Dict[str, float] = {'k_1': 1.0}
+    dct: Dict[str, float] = {"k_1": 1.0}
     foo = Foo(fd=NoCopyFrozenDict(dct))
     assert foo.fd == dct
 
