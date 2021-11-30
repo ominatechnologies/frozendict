@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2021.11.30
+++++++++++
 - infra: add flake8-quotes to pre-commit
 
 2021.11.26
