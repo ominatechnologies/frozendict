@@ -147,7 +147,7 @@ class FrozenDict(Mapping[KT, VT_co]):
                 not has_homogeneous_type(buildable_kwargs.keys())
                     or not has_homogeneous_type(buildable_kwargs.values()))):
                 raise TypeError
-            self._dict = dict(**buildable_kwargs)
+            self._dict = dict(**buildable_kwargs)  # type: ignore
         elif not hasattr(self, "_dict"):
             self._dict = dict()  # noqa: C408
 
