@@ -1,7 +1,7 @@
 # Testing requirements:
 coverage>=6.1
 flake8>=4.0.1
-mypy>=0.910
+mypy>=0.930
 pytest>=6.2.5
 types-colorama>=0.4.4
 types-pytz>=2021.3.1

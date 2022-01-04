@@ -4,6 +4,8 @@ Frozendict Changelog
 
 Head
 ++++
+- chore: update requirements
+- fix: minor issues
 
 2021.11.30
 ++++++++++

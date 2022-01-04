@@ -127,8 +127,8 @@ class FrozenDict(Mapping[KT, VT_co]):
                 value = {k: v for k, v in value.items()
                          if v is not None}
             if (homogeneous_type
-                and not (has_homogeneous_type(value.keys())
-                         and has_homogeneous_type(value.values()))):
+                    and not (has_homogeneous_type(value.keys())
+                             and has_homogeneous_type(value.values()))):
                 raise TypeError()
             if no_copy:
                 self._dict = value
@@ -144,10 +144,10 @@ class FrozenDict(Mapping[KT, VT_co]):
                 buildable_kwargs = {k: v for k, v in buildable_kwargs.items()
                                     if v is not None}
             if (homogeneous_type and (
-                not has_homogeneous_type(buildable_kwargs.keys())
+                    not has_homogeneous_type(buildable_kwargs.keys())
                     or not has_homogeneous_type(buildable_kwargs.values()))):
                 raise TypeError
-            self._dict = dict(**buildable_kwargs)
+            self._dict = dict(**buildable_kwargs)  # type: ignore
         elif not hasattr(self, "_dict"):
             self._dict = dict()  # noqa: C408
 
