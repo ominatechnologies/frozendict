@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2022.1.4
+++++++++
 - infra: fix packaging
 
 2021.11.30
