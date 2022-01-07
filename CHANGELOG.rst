@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- build: Add the EditorConfig file.
 
 2022.1.6
 ++++++++
