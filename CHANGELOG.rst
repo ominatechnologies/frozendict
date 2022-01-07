@@ -7,15 +7,15 @@ Head
 
 2022.1.6
 ++++++++
-- infra: fix packaging
+- build: fix packaging
 
 2022.1.4
 ++++++++
-- infra: fix packaging
+- build: fix packaging
 
 2021.11.30
 ++++++++++
-- infra: add flake8-quotes to pre-commit
+- build: add flake8-quotes to pre-commit
 
 2021.11.26
 ++++++++++
@@ -48,7 +48,7 @@ Head
 
 2021.9.29
 +++++++++
-- infra: add pre-commit check on the CI (#13)
+- build: add pre-commit check on the CI (#13)
 
 2021.9.28
 +++++++++
@@ -56,23 +56,23 @@ Head
 
 2021.9.27.3
 +++++++++++
-- infra: update flake8 config for .eggs
+- build: update flake8 config for .eggs
 
 2021.9.27.2
 +++++++++++
-- infra: update CI with linting and type checking
+- build: update CI with linting and type checking
 
 2021.9.27.1
 +++++++++++
-- infra: update flake8 config
+- build: update flake8 config
 
 2021.9.27
 +++++++++
-- infra: update readme
+- build: update readme
 
 2021.9.16
 +++++++++
-- infra: update pipelines with pip cache
+- build: update pipelines with pip cache
 
 2021.9.11
 +++++++++
@@ -80,11 +80,11 @@ Head
 
 2021.9.10
 +++++++++
-- infra: update tox (alphabetically ordering)
+- build: update tox (alphabetically ordering)
 
 2021.9.8
 ++++++++
-- infra: Update tox
+- build: Update tox
 
 2021.9.1.2
 ++++++++++
@@ -92,7 +92,7 @@ Head
 
 2021.9.1.1
 ++++++++++
-- infra: fix auto tagging
+- build: fix auto tagging
 
 2021.9.1
 ++++++++
