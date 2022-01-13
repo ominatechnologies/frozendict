@@ -122,7 +122,7 @@ class FrozenDict(Mapping[KT, VT_co]):
                 if not isinstance(val, Hashable):
                     msg = _("The value for key '{}' (of type: {}) is not"
                             " hashable.")
-                    raise TypeError(msg.format(key, type(key).__name__))
+                    raise TypeError(msg.format(key, type(val).__name__))
 
             if remove_none_values:
                 value = {k: v for k, v in value.items()
