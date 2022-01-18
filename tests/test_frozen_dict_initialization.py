@@ -37,10 +37,7 @@ def test_init_6():
 
 
 def test_init_7():
-    fd: FrozenDict[str, Union[int, str]] = FrozenDict({
-        "k_1": 0,
-        "k_2": "v_2"
-    })
+    fd: FrozenDict[str, Union[int, str]] = FrozenDict({"k_1": 0, "k_2": "v_2"})
     assert fd.get("k_1") == 0
     assert fd.get("k_2") == "v_2"
 
@@ -92,21 +89,14 @@ def test_init_kwargs():
     assert fd.get("k_2") == "1"
 
     fd: FrozenDict[str, Dict[str, int]] = FrozenDict(
-        k_1=frozendict({
-            "k_1": 0,
-            "k_2": 1
-        }),
-        k_2=frozendict({
-            "k_3": 2,
-            "k_4": 3
-        }))
+        k_1=frozendict({"k_1": 0, "k_2": 1}), k_2=frozendict({"k_3": 2, "k_4": 3})
+    )
     assert fd.keys() == {"k_1", "k_2"}
     assert fd.get("k_1") == {"k_1": 0, "k_2": 1}
     assert fd.get("k_2") == {"k_3": 2, "k_4": 3}
 
     with raises(TypeError):
-        FrozenDict(k_1={"k_1": 0, "k_2": 1},
-                   k_2={"k_3": 2, "k_4": 3})
+        FrozenDict(k_1={"k_1": 0, "k_2": 1}, k_2={"k_3": 2, "k_4": 3})
 
 
 def test_init_no_none_value():
@@ -114,25 +104,25 @@ def test_init_no_none_value():
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict({"k_1": 0, "k_2": None},
-                                          remove_none_values=True)
+    fd: FrozenDict[str, int] = FrozenDict(
+        {"k_1": 0, "k_2": None}, remove_none_values=True
+    )
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict({"k_1": 0, "k_2": None},
-                                          remove_none_values=True,
-                                          homogeneous_type=True)
+    fd: FrozenDict[str, int] = FrozenDict(
+        {"k_1": 0, "k_2": None}, remove_none_values=True, homogeneous_type=True
+    )
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=None,
-                                          remove_none_values=True)
+    fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=None, remove_none_values=True)
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=None,
-                                          remove_none_values=True,
-                                          homogeneous_type=True)
+    fd: FrozenDict[str, int] = FrozenDict(
+        k_1=0, k_2=None, remove_none_values=True, homogeneous_type=True
+    )
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
@@ -217,6 +207,7 @@ def test_immutable_no_copy():
 
 def test_immutable_no_copy_1():
     from frozendict import NoCopyFrozenDict as FrozenDict
+
     d = {"k_1": 0, "k_2": 1}
     fd_2: FrozenDict[str, int] = FrozenDict(d)
     assert isinstance(fd_2, FrozenDict)
