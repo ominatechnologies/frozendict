@@ -32,11 +32,23 @@ help:
 ## Initialize environment.
 install: install-tools install-pre-commit
 
-install-tools:
+install-tools-x86:
 	@python3.8 -V
 	@pip3.8 install -U pip setuptools wheel tox pre-commit
 	@python3.8 -m venv venv
 	@venv/bin/pip install -U pip setuptools wheel -r requirements.dev.txt -e .
+
+install-tools-m1:
+	@conda create -p ./venv python=3.8 -y
+	@venv/bin/pip install -U pip setuptools wheel tox pre-commit -r requirements.dev.txt
+	@CI=true venv/bin/pip install -e .
+
+install-tools:
+	@if [ $(shell uname -m) == "arm64" ]; then \
+		$(MAKE) install-tools-m1; \
+	else \
+		$(MAKE) install-tools-x86; \
+	fi
 
 ## Reinstall environment
 reinstall: clean-environment install
