@@ -2,7 +2,15 @@ from __future__ import annotations
 
 from gettext import gettext as _
 from typing import (
-    Any, ClassVar, Dict, Hashable, Iterator, Mapping, Optional, Set, TypeVar,
+    Any,
+    ClassVar,
+    Dict,
+    Hashable,
+    Iterator,
+    Mapping,
+    Optional,
+    Set,
+    TypeVar,
 )
 
 KT = TypeVar("KT")
@@ -32,8 +40,9 @@ class FrozenDict(Mapping[KT, VT_co]):
     _dict: Dict[KT, VT_co]
 
     def __new__(cls, *args, **kwargs):
-        if ((len(args) == 0 or args[0] is None or len(args[0]) == 0)
-                and len(set(kwargs.keys()) - __OPTIONAL_KEYS__) == 0):
+        if (len(args) == 0 or args[0] is None or len(args[0]) == 0) and len(
+            set(kwargs.keys()) - __OPTIONAL_KEYS__
+        ) == 0:
             # Return the same empty frozendict:
             if cls._empty_frozendict is None:
                 cls._empty_frozendict = super(FrozenDict, cls).__new__(cls)
@@ -76,13 +85,15 @@ class FrozenDict(Mapping[KT, VT_co]):
             return ("non_empty",)
         return ()
 
-    def __init__(self,
-                 value: Mapping[KT, VT_co] = None,
-                 *,
-                 homogeneous_type: bool = False,
-                 remove_none_values: bool = False,
-                 no_copy: bool = False,
-                 **kwargs):
+    def __init__(
+        self,
+        value: Mapping[KT, VT_co] = None,
+        *,
+        homogeneous_type: bool = False,
+        remove_none_values: bool = False,
+        no_copy: bool = False,
+        **kwargs
+    ):
         """Instantiate a FrozenDict.
 
         :param value: A mapping from which to create a FrozenDict.
@@ -120,16 +131,15 @@ class FrozenDict(Mapping[KT, VT_co]):
                     msg = _("The key '{}' (of type: {}) is not hashable.")
                     raise TypeError(msg.format(key, type(key).__name__))
                 if not isinstance(val, Hashable):
-                    msg = _("The value for key '{}' (of type: {}) is not"
-                            " hashable.")
+                    msg = _("The value for key '{}' (of type: {}) is not" " hashable.")
                     raise TypeError(msg.format(key, type(val).__name__))
 
             if remove_none_values:
-                value = {k: v for k, v in value.items()
-                         if v is not None}
-            if (homogeneous_type
-                    and not (has_homogeneous_type(value.keys())
-                             and has_homogeneous_type(value.values()))):
+                value = {k: v for k, v in value.items() if v is not None}
+            if homogeneous_type and not (
+                has_homogeneous_type(value.keys())
+                and has_homogeneous_type(value.values())
+            ):
                 raise TypeError()
             if no_copy:
                 self._dict = value
@@ -139,14 +149,17 @@ class FrozenDict(Mapping[KT, VT_co]):
             # The given kwargs should be hashable
             assert isinstance(hash(tuple(sorted(kwargs.items()))), int)
 
-            buildable_kwargs = {k: v for k, v in kwargs.items()
-                                if k not in __OPTIONAL_KEYS__}
+            buildable_kwargs = {
+                k: v for k, v in kwargs.items() if k not in __OPTIONAL_KEYS__
+            }
             if remove_none_values:
-                buildable_kwargs = {k: v for k, v in buildable_kwargs.items()
-                                    if v is not None}
-            if (homogeneous_type and (
-                    not has_homogeneous_type(buildable_kwargs.keys())
-                    or not has_homogeneous_type(buildable_kwargs.values()))):
+                buildable_kwargs = {
+                    k: v for k, v in buildable_kwargs.items() if v is not None
+                }
+            if homogeneous_type and (
+                not has_homogeneous_type(buildable_kwargs.keys())
+                or not has_homogeneous_type(buildable_kwargs.values())
+            ):
                 raise TypeError
             self._dict = dict(**buildable_kwargs)  # type: ignore
         elif not hasattr(self, "_dict"):
@@ -201,8 +214,10 @@ class FrozenDict(Mapping[KT, VT_co]):
     def serialize(self) -> Mapping:
         """Serialize the object to a form that can be passed to the
         :func:`json.dumps` function."""
-        return {str(k): (v.serialize() if getattr(v, "serialize", None) else v)
-                for k, v in self.items()}
+        return {
+            str(k): (v.serialize() if getattr(v, "serialize", None) else v)
+            for k, v in self.items()
+        }
 
     def union(self, other):
         """Returns the union of the given dictionaries. Equivalent to

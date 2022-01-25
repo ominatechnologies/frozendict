@@ -9,13 +9,15 @@ VT_co = TypeVar("VT_co", covariant=True)
 
 
 class NoCopyFrozenDict(FrozenDict[KT, VT_co]):
-    def __init__(self,
-                 value: Mapping[KT, VT_co] = None,
-                 *,
-                 homogeneous_type: bool = False,
-                 remove_none_values: bool = False,
-                 no_copy: bool = True,
-                 **kwargs):
+    def __init__(
+        self,
+        value: Mapping[KT, VT_co] = None,
+        *,
+        homogeneous_type: bool = False,
+        remove_none_values: bool = False,
+        no_copy: bool = True,
+        **kwargs
+    ):
         """
         Instantiate a FrozenDict without making a copy of the given dictionary.
 
@@ -33,8 +35,10 @@ class NoCopyFrozenDict(FrozenDict[KT, VT_co]):
         :param kwargs: You can use kwargs to instantiate a FrozenDict.
             Ex: FrozenDict(k1:v1, k2:v2)
         """
-        super().__init__(value,
-                         homogeneous_type=homogeneous_type,
-                         remove_none_values=remove_none_values,
-                         no_copy=no_copy,
-                         **kwargs)
+        super().__init__(
+            value,
+            homogeneous_type=homogeneous_type,
+            remove_none_values=remove_none_values,
+            no_copy=no_copy,
+            **kwargs
+        )
