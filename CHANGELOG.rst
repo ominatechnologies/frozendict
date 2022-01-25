@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2022.1.25
++++++++++
 - build: Add black
 - build: Add the EditorConfig file.
 
