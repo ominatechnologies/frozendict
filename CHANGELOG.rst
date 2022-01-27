@@ -4,6 +4,8 @@ Frozendict Changelog
 
 Head
 ++++
+- build: update editorconfig
+- build: Run `pre-commit` on all files in the `test-py38` environment.
 
 2022.1.25
 +++++++++
