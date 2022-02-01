@@ -92,7 +92,7 @@ class FrozenDict(Mapping[KT, VT_co]):
         homogeneous_type: bool = False,
         remove_none_values: bool = False,
         no_copy: bool = False,
-        **kwargs
+        **kwargs,
     ):
         """Instantiate a FrozenDict.
 
@@ -131,7 +131,7 @@ class FrozenDict(Mapping[KT, VT_co]):
                     msg = _("The key '{}' (of type: {}) is not hashable.")
                     raise TypeError(msg.format(key, type(key).__name__))
                 if not isinstance(val, Hashable):
-                    msg = _("The value for key '{}' (of type: {}) is not" " hashable.")
+                    msg = _("The value for key '{}' (of type: {}) is not hashable.")
                     raise TypeError(msg.format(key, type(val).__name__))
 
             if remove_none_values:

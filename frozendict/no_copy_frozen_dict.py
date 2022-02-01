@@ -16,7 +16,7 @@ class NoCopyFrozenDict(FrozenDict[KT, VT_co]):
         homogeneous_type: bool = False,
         remove_none_values: bool = False,
         no_copy: bool = True,
-        **kwargs
+        **kwargs,
     ):
         """
         Instantiate a FrozenDict without making a copy of the given dictionary.
@@ -40,5 +40,5 @@ class NoCopyFrozenDict(FrozenDict[KT, VT_co]):
             homogeneous_type=homogeneous_type,
             remove_none_values=remove_none_values,
             no_copy=no_copy,
-            **kwargs
+            **kwargs,
         )
