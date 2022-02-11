@@ -49,6 +49,7 @@ jobs:
           # Tag and its message
           bumpver update -n
           tag=$(git show -s --format=%s | cut -c 16-)
+          echo "CURRENT_VERSION=$tag" >> $GITHUB_ENV
           changes=$(sed -n '/^++++$/,/^++++++++/p' CHANGELOG.rst | sed '1d;$d' | sed '$d')
           message=$(echo -e "\n$changes")
 
@@ -64,3 +65,11 @@ jobs:
 
           # Push commit and tag
           git push --atomic origin main "$tag"
+      - uses: convictional/trigger-workflow-and-wait@v1.x
+        with:
+          owner: ominatechnologies
+          repo: jai_lib
+          github_token: ${{ secrets.GIT_PAT }}
+          workflow_file_name: bump.yml
+          wait_workflow: false
+          inputs: '{"branch_name": "${{ github.head_ref }}", "tag": "${{ env.CURRENT_VERSION }}", "reviewer": "${{ github.event.pull_request.user.login }}"}'
