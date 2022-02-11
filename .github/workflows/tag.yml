@@ -65,7 +65,7 @@ jobs:
 
           # Push commit and tag
           git push --atomic origin main "$tag"
-      - uses: convictional/trigger-workflow-and-wait@v1.x
+      - uses: convictional/trigger-workflow-and-wait@v1.5.0
         with:
           owner: ominatechnologies
           repo: jai_lib
