@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- build: Add auto bump signal to jai_lib
 
 2022.1.27
 +++++++++
