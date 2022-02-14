@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2022.2.14
++++++++++
 - build: support for python 3.10
 - build: Add auto bump signal to jai_lib
 
