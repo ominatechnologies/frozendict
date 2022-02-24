@@ -23,16 +23,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - uses: actions/cache@v2
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ env.pythonLocation }}
+          cache: pip
       - name: Install dependencies
         run: pip install -U pip setuptools wheel pre-commit bumpver -r requirements.dev.txt -e .
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit
       - name: pre-commit
         run: pre-commit run --all-files
-        env:
-          PRE_COMMIT_HOME: ${{ env.pythonLocation }}
       - name: Lint
         run: flake8
       - name: Type checking
@@ -72,4 +71,4 @@ jobs:
           github_token: ${{ secrets.GIT_PAT }}
           workflow_file_name: bump.yml
           wait_workflow: false
-          inputs: '{"branch_name": "${{ github.head_ref }}", "tag": "${{ env.CURRENT_VERSION }}", "reviewer": "${{ github.event.pull_request.user.login }}"}'
+          inputs: '{"branch_name": "${{ github.head_ref }}", "tag": "${{ env.CURRENT_VERSION }}"}'
