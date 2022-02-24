@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2022.2.24
++++++++++
 - Add: codeowners file
 
 2022.2.14
