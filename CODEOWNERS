@@ -1,0 +1,17 @@
+# This is a comment.
+# Each line is a file pattern followed by one or more owners.
+
+# Default
+* @wouter-vdb
+
+# CI
+.github/ @armrib
+
+# Pre-commit
+.pre-commit-config.yaml @armrib
+
+# Makefile
+makefile @armrib
+
+# Setup
+setup.* @armrib
