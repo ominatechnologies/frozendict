@@ -1,7 +1,9 @@
+global-exclude *.py[cod] __pycache__/* *.so *.dylib
+
+graft src
+
+include setup.cfg
+
 include AUTHORS.rst
 include CHANGELOG.rst
-recursive-include docs *
-include frozendict/py.typed
 include LICENSE
-include README.rst
-include setup.cfg
