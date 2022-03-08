@@ -19,7 +19,7 @@ jobs:
     if: github.event.pull_request.merged == true
 
     steps:
-      - uses: ominatechnologies/actions/tag@first
+      - uses: ominatechnologies/actions/tag@main
         with:
           token: ${{ secrets.GIT_PAT }}
           mypy: src tests
