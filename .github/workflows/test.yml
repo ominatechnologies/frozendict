@@ -21,31 +21,7 @@ jobs:
         python-version: ["3.8", "3.9", "3.10"]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: ominatechnologies/actions/pr@main
         with:
-          persist-credentials: false
-          fetch-depth: 0
-      - name: Changelog
-        run: git diff --name-only origin/main HEAD | grep CHANGELOG.rst || exit 1
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
-      - name: Install dependencies
-        run: pip install -U pip setuptools wheel pre-commit -r requirements.dev.txt -e .
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit
-      - name: pre-commit
-        run: git diff --name-only origin/main HEAD | grep pre-commit-config && pre-commit run --all-files || pre-commit run --from-ref origin/main --to-ref HEAD
-      - name: Changelog
-        run: git diff --name-only origin/main HEAD | grep CHANGELOG.rst || exit 1
-      - name: Lint
-        run: flake8
-      - name: Type checking
-        run: mypy frozendict tests
-      - name: Test with pytest
-        run: pytest
+          mypy: src tests
+          python: ${{ matrix.python-version }}

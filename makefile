@@ -33,10 +33,10 @@ help:
 install: install-tools install-pre-commit
 
 install-tools:
-	@python3.8 -V
-	@pip3.8 install -U pip setuptools wheel tox pre-commit
+	@python3.8 -m pip install -U pip setuptools wheel tox pre-commit
 	@python3.8 -m venv venv
-	@venv/bin/pip install -U pip setuptools wheel -r requirements.dev.txt -e .
+	@venv/bin/pip install -U pip setuptools wheel
+	@venv/bin/pip install -r requirements.dev.txt -e .
 
 ## Reinstall environment
 reinstall: clean-environment install
@@ -53,10 +53,18 @@ install-pre-commit:
 	git config --bool flake8.lazy true
 	@pre-commit autoupdate
 
-## Update the repository
-update:
-	@echo "\n\n\033[1;45m Update Frozendict \033[0m\n"
-	@git status -b --porcelain | awk -F '.' '/^#/ { print $$4 }' ;git pull || :
+## Clean
+clean:
+	@find . -path "./venv" ! -prune \
+	-o -type d -name "__pycache__" \
+	-o -type d -name "build" \
+	-o -type d -name "dist" \
+	-o -type d -name "*.egg-info" \
+	-o -type d -name ".eggs" \
+	-o -type d -name ".mypy_cache" \
+	-o -type d -name ".pytest_cache" \
+	| xargs rm -rf
+	@rm -rf ~/.tox_frozendict
 
 # -- Wrapup --------------- --- --  -
 
@@ -66,5 +74,5 @@ update:
 	install \
 	reinstall \
 	clean-environment \
-	update \
+	clean \
 	help \

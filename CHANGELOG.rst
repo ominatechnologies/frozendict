@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- build: Upgrade with refactored actions
 
 2022.2.24
 +++++++++
