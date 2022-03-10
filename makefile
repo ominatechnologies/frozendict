@@ -51,7 +51,6 @@ install-pre-commit:
 	@pre-commit install -f --install-hook && \
 	git config --bool flake8.strict true && \
 	git config --bool flake8.lazy true
-	@pre-commit autoupdate
 
 ## Clean
 clean:

@@ -1,0 +1,22 @@
+name: pre-commit autoupdate
+
+on:
+  schedule:
+    # This cronjob will trigger every Monday morning at 8:30
+    - cron: '30 8 * * 1'
+  workflow_dispatch:
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  precommit-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: ominatechnologies/actions/precommit-update@main
+        with:
+          token: ${{ secrets.GIT_PAT }}

@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- Add: pre-commit auto update action
 - build: Upgrade with refactored actions
 
 2022.2.24
