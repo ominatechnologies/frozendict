@@ -163,7 +163,7 @@ class FrozenDict(Mapping[KT, VT_co]):
                 raise TypeError
             self._dict = dict(**buildable_kwargs)  # type: ignore
         elif not hasattr(self, "_dict"):
-            self._dict = dict()  # noqa: C408
+            self._dict = {}
 
     # -- Dict Methods --------------- --- --  -
 
