@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- build: minor updates
 
 2022.3.10
 +++++++++
