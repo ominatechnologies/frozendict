@@ -49,3 +49,11 @@ repos:
             "flake8-quotes",
             "flake8-simplify",
           ]
+
+  - repo: local
+    hooks:
+      - id: wrong-pytest-imports
+        name: wrong pytest imports
+        language: pygrep
+        entry: ^from _pytest
+        types: [python]
