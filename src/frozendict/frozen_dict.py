@@ -13,6 +13,8 @@ from typing import (
     TypeVar,
 )
 
+import xxhash
+
 KT = TypeVar("KT")
 VT_co = TypeVar("VT_co", covariant=True)
 
@@ -257,14 +259,15 @@ class FrozenDict(Mapping[KT, VT_co]):
         return self._dict[key]
 
     def __hash__(self):
-        if self._hash_cache is not None:
-            return self._hash_cache
-        try:
-            items = sorted(self._dict.items())
-        except TypeError:
-            items = self._dict.items()
-        rv = self._hash_cache = hash(tuple(items))
-        return rv
+        if self._hash_cache is None:
+            try:
+                items = str(tuple(sorted(self._dict.items())))
+            except TypeError:
+                items = str(tuple(self._dict.items()))
+
+            self._hash_cache = xxhash.xxh64(items, seed=0).intdigest()
+
+        return self._hash_cache
 
     def __iter__(self):
         return iter(self._dict)
