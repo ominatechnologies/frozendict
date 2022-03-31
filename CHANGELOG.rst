@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- refactor: Ensure consistent signature hashing #94
 - fix: no default pytest envs
 
 2022.3.28

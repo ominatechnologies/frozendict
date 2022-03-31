@@ -13,6 +13,8 @@ from typing import (
     TypeVar,
 )
 
+import xxhash
+
 KT = TypeVar("KT")
 VT_co = TypeVar("VT_co", covariant=True)
 
@@ -24,8 +26,8 @@ __OPTIONAL_KEYS__: Set[str] = {
 
 
 class FrozenDict(Mapping[KT, VT_co]):
-    """An immutable dictionary that implements the "py:class:`~typing.Mapping`
-    protocol and other :py:class:`~dict` methods.
+    """An immutable dictionary that implements the "py:class:`~typing.Mapping` protocol
+    and other :py:class:`~dict` methods.
     """
 
     # -- Class Initialization --------------- --- --  -
@@ -55,28 +57,25 @@ class FrozenDict(Mapping[KT, VT_co]):
             return super().__new__(cls)
 
     def __getnewargs__(self):
-        # When instantiating a frozendict object, the static `__new__` method
-        # is called with the arguments passed to the constructor. When the
-        # `args` argument is "empty" then the "empty" frozendict singleton in
-        # returned.
+        # When instantiating a frozendict object, the static `__new__` method is called
+        # with the arguments passed to the constructor. When the `args` argument is
+        # "empty" then the "empty" frozendict singleton in returned.
         #
-        # However, when unpickling a class instance, the static `__new__`
-        # method is called without arguments to instantiate a "fresh" instance.
-        # The unpickling process then updates the `__dct__` with the unpickled
-        # properties. Because of this, the `__new__` method cannot distinguish
-        # between "regular" instantiations of "empty" frozen dictionaries and
-        # "empty" instantiations as part of unpickling non-empty frozen
-        # dictionaries. Hence it cannot decide when to yield the "empty"
-        # frozendict singleton and when not to.
+        # However, when unpickling a class instance, the static `__new__` method is
+        # called without arguments to instantiate a "fresh" instance. The unpickling
+        # process then updates the `__dct__` with the unpickled properties. Because of
+        # this, the `__new__` method cannot distinguish between "regular" instantiations
+        # of "empty" frozen dictionaries and "empty" instantiations as part of
+        # unpickling non-empty frozen dictionaries. Hence it cannot decide when to yield
+        # the "empty" frozendict singleton and when not to.
         #
-        # The `__getnewargs__` implementation is provided to remedy this
-        # problem. When unpickling an object, this method is called and the
-        # result is passed to the `__new__` method as the `args` argument.
-        # By returning a non-empty tuple of arguments for non-empty dicts,
-        # the `__new__` method is capable of distinguishing between "regular"
-        # instantiations of "empty" frozen dictionaries and "empty"
-        # instantiations as part of unpickling non-empty frozen dictionaries.
-        # Note that the actual argument returned by this method does not
+        # The `__getnewargs__` implementation is provided to remedy this problem. When
+        # unpickling an object, this method is called and the result is passed to the
+        # `__new__` method as the `args` argument. By returning a non-empty tuple of
+        # arguments for non-empty dicts, the `__new__` method is capable of
+        # distinguishing between "regular" instantiations of "empty" frozen dictionaries
+        # and "empty" instantiations as part of unpickling non-empty frozen
+        # dictionaries. Note that the actual argument returned by this method does not
         # matter, it just needs a non-empty tuple.
         #
         # Inspired by: https://github.com/Technologicat/unpythonic/issues/55
@@ -97,15 +96,15 @@ class FrozenDict(Mapping[KT, VT_co]):
         """Instantiate a FrozenDict.
 
         :param value: A mapping from which to create a FrozenDict.
-        :param homogeneous_type: Option to check that all types in
-            the dictionary are homogeneous, all keys should have the same
-            type and all values should have the same type.
-        :param remove_none_values: Option to remove any None value from the
-            given mapping.
+        :param homogeneous_type: Option to check that all types in the dictionary are
+            homogeneous, all keys should have the same type and all values should have
+            the same type.
+        :param remove_none_values: Option to remove any None value from the given
+            mapping.
         :param no_copy: Option to disable the copy of the given mapping.
-            Ex: frozendict({k1:v1, k2:v2}, no_copy=True) will create a safe
-            and immutable object without copying as there are no references
-            of the given value.
+            Ex: frozendict({k1:v1, k2:v2}, no_copy=True) will create a safe and
+            immutable object without copying as there are no references of the given
+            value.
         :param kwargs: You can use kwargs to instantiate a FrozenDict.
             Ex: FrozenDict(k1:v1, k2:v2)
         """
@@ -180,18 +179,16 @@ class FrozenDict(Mapping[KT, VT_co]):
         return self._dict.keys()
 
     def update(self, mapping: Mapping) -> FrozenDict:
-        """Returns a new immutable dict that contains the key:value elements
-        from this dict, updated with the key:value elements from the given
-        mapping.
+        """Returns a new immutable dict that contains the key:value elements from this
+        dict, updated with the key:value elements from the given mapping.
 
-        Note that this method is not compatible with the `dict.update` method,
-        which updates the dictionary in-place (destructively), while this
-        method is non-destructive.
+        Note that this method is not compatible with the `dict.update` method, which
+        updates the dictionary in-place (destructively), while this method is
+        non-destructive.
 
-        :param mapping: Required. Either another dictionary object or an
-            iterable of key:value pairs (iterables of length two). If keyword
-            arguments are specified, the dictionary is then updated with those
-            key:value pairs.
+        :param mapping: Required. Either another dictionary object or an iterable of
+            key:value pairs (iterables of length two). If keyword arguments are
+            specified, the dictionary is then updated with those key:value pairs.
         :return: The new frozen dictionary.
 
         TODO: Should `homogeneous_type` or `remove_none_values` be supported ?
@@ -207,21 +204,22 @@ class FrozenDict(Mapping[KT, VT_co]):
     # -- Custom Methods --------------- --- --  -
 
     def intersection(self, other):
-        """Returns the intersection of the given dictionaries. Equivalent to
-        `self & other`."""
+        """Returns the intersection of the given dictionaries. Equivalent to `self &
+        other`.
+        """
         return self.__and__(other)
 
     def serialize(self) -> Mapping:
-        """Serialize the object to a form that can be passed to the
-        :func:`json.dumps` function."""
+        """Serialize the object to a form that can be passed to the :func:`json.dumps`
+        function.
+        """
         return {
             str(k): (v.serialize() if getattr(v, "serialize", None) else v)
             for k, v in self.items()
         }
 
     def union(self, other):
-        """Returns the union of the given dictionaries. Equivalent to
-        `self | other`."""
+        """Returns the union of the given dictionaries. Equivalent to `self | other`."""
         return self.__or__(other)
 
     # -- Magic Methods --------------- --- --  -
@@ -257,14 +255,15 @@ class FrozenDict(Mapping[KT, VT_co]):
         return self._dict[key]
 
     def __hash__(self):
-        if self._hash_cache is not None:
-            return self._hash_cache
-        try:
-            items = sorted(self._dict.items())
-        except TypeError:
-            items = self._dict.items()
-        rv = self._hash_cache = hash(tuple(items))
-        return rv
+        if self._hash_cache is None:
+            try:
+                items = str(tuple(sorted(self._dict.items())))
+            except TypeError:
+                items = str(tuple(self._dict.items()))
+
+            self._hash_cache = xxhash.xxh64(items, seed=0).intdigest()
+
+        return self._hash_cache
 
     def __iter__(self):
         return iter(self._dict)
