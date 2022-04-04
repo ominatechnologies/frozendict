@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2022.4.4
+++++++++
 - build: drop PYTHONHASHSEED=0 #94
 
 2022.3.31
