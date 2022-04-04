@@ -25,4 +25,3 @@ jobs:
         with:
           mypy: src tests
           python: ${{ matrix.python-version }}
-          pytest-envs:
