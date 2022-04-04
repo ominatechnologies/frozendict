@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2022.4.4.1
+++++++++++
 - chore: pre-commit update
 
 2022.4.4
