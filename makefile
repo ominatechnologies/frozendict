@@ -65,6 +65,62 @@ clean:
 	| xargs rm -rf
 	@rm -rf ~/.tox_frozendict
 
+ci-venv:
+	@pre-commit run --from-ref origin/main --to-ref HEAD
+	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
+	@echo mypy && venv/bin/mypy src/frozendict tests
+	@echo pytest && venv/bin/pytest
+
+ci-devcontainer:
+	@pre-commit run --from-ref origin/main --to-ref HEAD
+	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
+	@echo mypy && mypy src/frozendict tests
+	@echo pytest && pytest
+
+ ## fake ci pipeline
+ ci:
+ ifeq ($(PLATFORM), MacM1)
+	$(MAKE) ci-venv
+ else ifeq ($(PLATFORM), MacIntel)
+	$(MAKE) ci-venv
+ else
+	$(MAKE) ci-devcontainer
+ endif
+
+outdated-venv:
+	@venv/bin/pip list --outdated
+
+outdated-devcontainer:
+	@pip list --outdated
+
+## Check outdated packages
+outdated:
+ifeq ($(PLATFORM), MacM1)
+	$(MAKE) outdated-venv
+else ifeq ($(PLATFORM), MacIntel)
+	$(MAKE) outdated-venv
+else
+	$(MAKE) outdated-devcontainer
+endif
+
+dep-tree-venv:
+	@venv/bin/pip install pipdeptree
+	@venv/bin/pipdeptree -l | grep -v "@" > deptree.txt
+
+dep-tree-devcontainer:
+	@pip install pipdeptree
+	@pipdeptree -l | grep -v "@" > deptree.txt
+
+## Check dep-tree packages
+dep-tree:
+ifeq ($(PLATFORM), MacM1)
+	$(MAKE) dep-tree-venv
+else ifeq ($(PLATFORM), MacIntel)
+	$(MAKE) dep-tree-venv
+else
+	$(MAKE) dep-tree-devcontainer
+endif
+
 # -- Wrapup --------------- --- --  -
 
 .DEFAULT: help
