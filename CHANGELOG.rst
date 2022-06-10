@@ -4,7 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
-- chore: update pre-commit config
+- build: pre-commit add isort and other improvements
 - chore: update pre-commit config
 
 2022.4.4.1
@@ -41,7 +41,7 @@ Head
 2022.1.27
 +++++++++
 - build: update editorconfig
-- build: Run `pre-commit` on all files in the `test-py38` environment.
+- build: Run ``pre-commit`` on all files in the ``test-py38`` environment.
 
 2022.1.25
 +++++++++
@@ -143,7 +143,7 @@ Head
 
 2021.08.04
 ++++++++++
-- feat: Add the `update(mapping)` method.
+- feat: Add the ``update(mapping)`` method.
 - doc: Add documentation.
 
 
