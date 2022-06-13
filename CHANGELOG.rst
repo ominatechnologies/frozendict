@@ -4,8 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
-- chore: update pre-commit config
-- chore: update pre-commit config
+- build: pre-commit add isort
 
 2022.4.4.1
 ++++++++++
