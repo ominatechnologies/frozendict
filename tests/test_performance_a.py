@@ -20,7 +20,7 @@ def frozendict_updates(repeat, updates):
     for _ in range(repeat):
         FrozenDict({f"k_{j}": j for j in range(updates)})
     lapsed = (datetime.now() - start_time).seconds
-    print(f"* frozendict with {updates} updates: {lapsed}s")  # noqa: T001
+    print(f"* frozendict with {updates} updates: {lapsed}s")  # noqa: T201
 
 
 def dict_updates(repeat, updates):
@@ -28,4 +28,4 @@ def dict_updates(repeat, updates):
     for _ in range(repeat):
         FrozenDict({f"k_{j}": j for j in range(updates)})
     lapsed = (datetime.now() - start_time).seconds
-    print(f"* dict with {updates} updates: {lapsed}s")  # noqa: T001
+    print(f"* dict with {updates} updates: {lapsed}s")  # noqa: T201
