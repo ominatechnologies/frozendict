@@ -4,6 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+
+2022.6.14
++++++++++
 - build: pre-commit add isort
 
 2022.4.4.1
