@@ -2,7 +2,7 @@ from typing import Dict, Mapping, Optional, Union
 
 from pytest import raises
 
-from frozendict import AbstractDict, FrozenDict, frozendict
+from frozendict import AbstractDict, FrozenDict, NoCopyFrozenDict, frozendict
 
 
 def test_init_1():
@@ -206,17 +206,17 @@ def test_immutable_no_copy():
 
 
 def test_immutable_no_copy_1():
-    from frozendict import NoCopyFrozenDict as FrozenDict
-
     d = {"k_1": 0, "k_2": 1}
-    fd_2: FrozenDict[str, int] = FrozenDict(d)
+    fd_2: FrozenDict[str, int] = NoCopyFrozenDict(d)
+    assert isinstance(fd_2, NoCopyFrozenDict)
     assert isinstance(fd_2, FrozenDict)
     assert fd_2.items() == d.items()
     d["k_3"] = 3
     assert d.get("k_3") == 3
     assert fd_2.get("k_3") == 3
 
-    fd_3: FrozenDict[str, Dict[str, int]] = FrozenDict(k=fd_2)
+    fd_3: FrozenDict[str, Dict[str, int]] = NoCopyFrozenDict(k=fd_2)
+    assert isinstance(fd_3, NoCopyFrozenDict)
     assert isinstance(fd_3, FrozenDict)
     assert d.get("k_3") == 3
     assert fd_3.get("k").get("k_3") == 3
