@@ -101,10 +101,8 @@ class FrozenDict(Mapping[KT, VT_co]):
             the same type.
         :param remove_none_values: Option to remove any None value from the given
             mapping.
-        :param no_copy: Option to disable the copy of the given mapping.
-            Ex: frozendict({k1:v1, k2:v2}, no_copy=True) will create a safe and
-            immutable object without copying as there are no references of the given
-            value.
+        :param no_copy: When false (default), a shallow copy of the given mapping is
+            used. When true, the given mapping is used as is.
         :param kwargs: You can use kwargs to instantiate a FrozenDict.
             Ex: FrozenDict(k1:v1, k2:v2)
         """
