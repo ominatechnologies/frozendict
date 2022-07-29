@@ -4,7 +4,6 @@ Frozendict Changelog
 
 Head
 ++++
-- chore: remove default codeowners
 - chore: update pre-commit config
 
 2022.6.14
