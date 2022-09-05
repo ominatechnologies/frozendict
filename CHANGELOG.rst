@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- chore: update pre-commit config
 - chore: remove default codeowners
 - chore: update pre-commit config
 
