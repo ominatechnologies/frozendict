@@ -65,60 +65,69 @@ clean:
 	| xargs rm -rf
 	@rm -rf ~/.tox_frozendict
 
+
+k = "."
+
 ci-venv:
-	@pre-commit run --from-ref origin/main --to-ref HEAD
-	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
 	@echo mypy && venv/bin/mypy src/frozendict tests
 	@echo pytest && venv/bin/pytest
+	@echo pre-commit && pre-commit run --from-ref origin/main --to-ref HEAD
+	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
 
 ci-devcontainer:
-	@pre-commit run --from-ref origin/main --to-ref HEAD
-	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
 	@echo mypy && mypy src/frozendict tests
 	@echo pytest && pytest
+	@echo pre-commit && pre-commit run --from-ref origin/main --to-ref HEAD
+	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
 
- ## fake ci pipeline
- ci:
- ifeq ($(PLATFORM), MacM1)
-	$(MAKE) ci-venv
- else ifeq ($(PLATFORM), MacIntel)
-	$(MAKE) ci-venv
- else
-	$(MAKE) ci-devcontainer
- endif
+## fake ci pipeline
+ci:
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
+	@$(MAKE) ci-venv
+else
+	@$(MAKE) ci-devcontainer
+endif
 
-outdated-venv:
-	@venv/bin/pip list --outdated
+## Run mypy
+mypy:
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
+	@venv/bin/mypy src tests
+else
+	@mypy src tests
+endif
 
-outdated-devcontainer:
-	@pip list --outdated
+## Run pytest
+pytest:
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
+	@venv/bin/pytest --maxfail=1 -k $(k)
+else
+	@pytest --maxfail=1 -k $(k)
+endif
+
+## Run pytest-watch
+watch:
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
+	@venv/bin/pytest-watch -- --failed-first --maxfail=1 --new-first -k $(k)
+else
+	@pytest-watch -- --failed-first --maxfail=1 --new-first -k $(k)
+endif
 
 ## Check outdated packages
 outdated:
-ifeq ($(PLATFORM), MacM1)
-	$(MAKE) outdated-venv
-else ifeq ($(PLATFORM), MacIntel)
-	$(MAKE) outdated-venv
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
+	@venv/bin/pip list --outdated
 else
-	$(MAKE) outdated-devcontainer
+	@pip list --outdated
 endif
-
-dep-tree-venv:
-	@venv/bin/pip install pipdeptree
-	@venv/bin/pipdeptree -l | grep -v "@" > deptree.txt
-
-dep-tree-devcontainer:
-	@pip install pipdeptree
-	@pipdeptree -l | grep -v "@" > deptree.txt
 
 ## Check dep-tree packages
 dep-tree:
-ifeq ($(PLATFORM), MacM1)
-	$(MAKE) dep-tree-venv
-else ifeq ($(PLATFORM), MacIntel)
-	$(MAKE) dep-tree-venv
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
+	@venv/bin/pip install pipdeptree
+	@venv/bin/pipdeptree -l | grep -v "@" > deptree.txt
 else
-	$(MAKE) dep-tree-devcontainer
+	@pip install pipdeptree
+	@pipdeptree -l | grep -v "@" > deptree.txt
 endif
 
 # -- Wrapup --------------- --- --  -
@@ -126,8 +135,15 @@ endif
 .DEFAULT: help
 
 .PHONY: \
-	install \
-	reinstall \
-	clean-environment \
+	ci \
 	clean \
+	clean-environment \
+	dep-tree \
 	help \
+	install \
+	install-pre-commit \
+	mypy \
+	outdated \
+	pytest \
+	reinstall \
+	watch

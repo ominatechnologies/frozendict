@@ -3,6 +3,7 @@ coverage>=6.1
 flake8>=4.0.1
 mypy>=0.971
 pytest>=6.2.5
+git+https://github.com/wouter-vdb/pytest-watch@2021.01.29#egg=pytest-watch
 types-colorama>=0.4.7
 types-pytz>=2021.3.3
 typing-extensions>=4.0.1
