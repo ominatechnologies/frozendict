@@ -68,24 +68,18 @@ clean:
 
 k = "."
 
-ci-venv:
+## Run CI pipeline locally
+ci:
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
 	@echo mypy && venv/bin/mypy src/frozendict tests
 	@echo pytest && venv/bin/pytest
 	@echo pre-commit && pre-commit run --from-ref origin/main --to-ref HEAD
 	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
-
-ci-devcontainer:
+else
 	@echo mypy && mypy src/frozendict tests
 	@echo pytest && pytest
 	@echo pre-commit && pre-commit run --from-ref origin/main --to-ref HEAD
 	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
-
-## fake ci pipeline
-ci:
-ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
-	@$(MAKE) ci-venv
-else
-	@$(MAKE) ci-devcontainer
 endif
 
 ## Run mypy
