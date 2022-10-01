@@ -69,37 +69,38 @@ clean:
 k = "."
 
 ## Run CI pipeline locally
-ci:
-ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
-	@echo mypy && venv/bin/mypy src/frozendict tests
-	@echo pytest && venv/bin/pytest
-	@echo pre-commit && pre-commit run --from-ref origin/main --to-ref HEAD
-	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
-else
-	@echo mypy && mypy src/frozendict tests
-	@echo pytest && pytest
-	@echo pre-commit && pre-commit run --from-ref origin/main --to-ref HEAD
-	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo missing CHANGELOG && exit 1)
-endif
+ci: mypy pytest pre-commit
+	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo unchanged CHANGELOG && exit 1)
 
 ## Run mypy
 mypy:
+	@echo "\n\n\033[1;45m FrozenDict Type-Checking \033[0m\n"
 ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
 	@venv/bin/mypy src tests
 else
 	@mypy src tests
 endif
 
+## Run pre-commit
+pre-commit:
+	@echo "\n\n\033[1;45m Run pre-commit on FrozenDict \033[0m\n"
+	@echo pre-commit && pre-commit run --all-files --from-ref origin/main --to-ref HEAD
+
 ## Run pytest
 pytest:
+	@echo "\n\n\033[1;45m FrozenDict Unit-Testing \033[0m\n"
 ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
 	@venv/bin/pytest --maxfail=1 -k $(k)
 else
 	@pytest --maxfail=1 -k $(k)
 endif
 
+## Run all tests
+test: mypy pytest pre-commit
+
 ## Run pytest-watch
 watch:
+	@echo "\n\n\033[1;45m FrozenDict Unit-Testing in Watch-Mode \033[0m\n"
 ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
 	@venv/bin/pytest-watch -- --failed-first --maxfail=1 --new-first -k $(k)
 else
@@ -138,6 +139,8 @@ endif
 	install-pre-commit \
 	mypy \
 	outdated \
+	pre-commit \
 	pytest \
 	reinstall \
+	test \
 	watch

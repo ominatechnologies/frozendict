@@ -4,9 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+- fix: [373] Finetune Setup MORE
 - chore: update pre-commit config
 - chore: remove default codeowners
-- chore: update pre-commit config
 
 2022.6.14
 +++++++++

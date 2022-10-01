@@ -60,3 +60,9 @@ repos:
         language: pygrep
         entry: ^from _pytest
         types: [python]
+      - id: bad-imports
+        name: bad imports
+        language: pygrep
+        entry: import \*
+        files: __init__.py
+        types: [python]
