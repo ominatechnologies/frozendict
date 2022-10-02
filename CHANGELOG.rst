@@ -4,7 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
-- fix: [373] Finetune Setup MORE
+- fix: https://github.com/ominatechnologies/jai_issues/issues/373
 - chore: update pre-commit config
 - chore: remove default codeowners
 

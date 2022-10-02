@@ -65,8 +65,7 @@ clean:
 	| xargs rm -rf
 	@rm -rf ~/.tox_frozendict
 
-
-k = "."
+# -- Testing --------------- --- --  -
 
 ## Run CI pipeline locally
 ci: mypy pytest pre-commit
@@ -84,7 +83,9 @@ endif
 ## Run pre-commit
 pre-commit:
 	@echo "\n\n\033[1;45m Run pre-commit on FrozenDict \033[0m\n"
-	@echo pre-commit && pre-commit run --all-files --from-ref origin/main --to-ref HEAD
+	@echo pre-commit && pre-commit run --all-files
+
+k = "."
 
 ## Run pytest
 pytest:
