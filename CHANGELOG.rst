@@ -4,9 +4,9 @@ Frozendict Changelog
 
 Head
 ++++
+- fix: https://github.com/ominatechnologies/jai_issues/issues/373
 - chore: update pre-commit config
 - chore: remove default codeowners
-- chore: update pre-commit config
 
 2022.6.14
 +++++++++
