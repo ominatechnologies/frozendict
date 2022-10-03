@@ -108,6 +108,17 @@ else
 	@pytest-watch -- --failed-first --maxfail=1 --new-first -k $(k)
 endif
 
+## Check the test coverage:
+cov:
+	@echo "\n\n\033[1;45m FrozenDict Unit-Test Coverage \033[0m\n"
+ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
+	@venv/bin/coverage run -m pytest --verbosity=0
+	@venv/bin/coverage report
+else
+	@coverage run -m pytest --verbosity=0
+	@coverage report
+endif
+
 ## Check outdated packages
 outdated:
 ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
