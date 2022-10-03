@@ -83,7 +83,7 @@ endif
 ## Run pre-commit
 pre-commit:
 	@echo "\n\n\033[1;45m Run pre-commit on FrozenDict \033[0m\n"
-	@echo pre-commit && pre-commit run --all-files
+	@pre-commit run --all-files
 
 k = "."
 
