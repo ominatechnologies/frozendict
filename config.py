@@ -1,7 +1,7 @@
 # Single-sourced project configuration values:
 
 # The full version, including alpha/beta/rc tags:
-release = "2022.6.14"
+release = "2022.10.3"
 version = release
 
 # Distribution package name:
