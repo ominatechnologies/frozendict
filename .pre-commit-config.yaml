@@ -58,3 +58,13 @@ repos:
         language: pygrep
         entry: ^from _pytest
         types: [python]
+      - id: bad-imports
+        name: bad imports
+        language: pygrep
+        entry: import \*
+        types: [python]
+      - id: no-all
+        name: remove old fashion __all__
+        language: pygrep
+        entry: __all__
+        types: [python]
