@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- chore: update pre-commit config
 
 2022.10.3
 +++++++++
