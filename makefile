@@ -103,7 +103,7 @@ test: mypy pytest pre-commit
 watch:
 	@echo "\n\n\033[1;45m FrozenDict Unit-Testing in Watch-Mode \033[0m\n"
 ifeq ($(PLATFORM), $(filter $(PLATFORM),MacM1 MacIntel))
-	@venv/bin/pytest-watch -- --failed-first --maxfail=1 --new-first -k $(k)
+	@venv/bin/pytest-watch --runner venv/bin/pytest -- --failed-first --maxfail=1 --new-first -k $(k)
 else
 	@pytest-watch -- --failed-first --maxfail=1 --new-first -k $(k)
 endif
