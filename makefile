@@ -69,7 +69,6 @@ clean:
 
 ## Run CI pipeline locally
 ci: mypy pytest pre-commit
-	@git diff --name-only origin/main HEAD | grep CHANGELOG.rst || (echo unchanged CHANGELOG && exit 1)
 
 ## Run mypy
 mypy:

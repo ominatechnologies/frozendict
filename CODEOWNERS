@@ -12,6 +12,3 @@ makefile @armrib
 
 # Setup
 setup.* @armrib
-
-# No owner
-CHANGELOG.rst
