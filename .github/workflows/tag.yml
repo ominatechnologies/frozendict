@@ -24,3 +24,4 @@ jobs:
           token: ${{ secrets.GIT_PAT }}
           mypy: src tests
           triggers: jai_lib
+          python: 3.8

@@ -33,8 +33,8 @@ help:
 install: install-tools install-pre-commit
 
 install-tools:
-	@python3.9 -m pip install -U pip setuptools wheel tox pre-commit
-	@python3.9 -m venv venv
+	@python3.10 -m pip install -U pip setuptools wheel tox pre-commit
+	@python3.10 -m venv venv
 	@venv/bin/pip install -U pip setuptools wheel
 	@venv/bin/pip install -r requirements.dev.txt -e .
 

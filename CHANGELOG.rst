@@ -4,6 +4,7 @@ Frozendict Changelog
 
 Head
 ++++
+- build: move to python 3.10
 - chore: update pre-commit config
 
 2022.10.3
