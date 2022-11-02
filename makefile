@@ -33,9 +33,11 @@ help:
 install: install-tools install-pre-commit
 
 install-tools:
-	@python3.9 -m pip install -U pip setuptools wheel tox pre-commit
+	@python3.9 -m pip install -U pip
+	@python3.9 -m pip install -U setuptools wheel pre-commit
 	@python3.9 -m venv venv
-	@venv/bin/pip install -U pip setuptools wheel
+	@venv/bin/pip install -U pip
+	@venv/bin/pip install -U setuptools wheel
 	@venv/bin/pip install -r requirements.dev.txt -e .
 
 ## Reinstall environment
@@ -43,8 +45,7 @@ reinstall: clean-environment install
 
 ## Clean environment
 clean-environment:
-	@venv/bin/pip freeze | grep -v "@" | xargs venv/bin/pip uninstall -y
-	@venv/bin/pip uninstall -y frozendict pytest-watch
+	@rm -rf venv
 
 ## Install git hooks that run Flake8 before accepting commits.
 install-pre-commit:
