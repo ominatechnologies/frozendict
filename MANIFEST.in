@@ -5,5 +5,4 @@ graft src
 include setup.cfg
 
 include AUTHORS.rst
-include CHANGELOG.rst
 include LICENSE

@@ -1,4 +1,4 @@
 Changelog
 =========
-.. include:: ../CHANGELOG.rst
+.. include::
    :start-after: inclusion-marker
