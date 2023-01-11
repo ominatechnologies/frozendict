@@ -1,23 +1,67 @@
+# Python cache
 __pycache__/
-*~
-.DS_Store
-.cache/
-.coverage
-.coverage.*
-.eggs/
-.env
-.idea/
-.mypy_cache/
+**/__pycache__/
+
+*.pyc
+*.py[cod]
+
 .pytest_cache/
-.tox*
-.vscode/
-*.egg
-*.egg-info/
-*.ipynb_checkpoints
-*.py[cdo]
-*.so
-build/
-dist/
-tests/reports/
+**/.pytest_cache/
+
+.mypy_cache/
+**/.mypy_cache/
+
+.cache
+
+# Virtual environment
 venv/
+**/venv/
+
+# Coverage report
+.coverage
+**/.coverage
+
+_coverage
+
+# Build results
+dist/
+**/dist/
+
+build/
+**/build/
+
+*.egg-info/
+**/*.egg-info/
+
+.eggs/
+**/.eggs/
+
+# Test results
+results/
+**/results/
+
+# Benchmark
+.benchmark/
+
+# IDE
+.idea/
+.vscode/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac desktop service store files
+.DS_Store
+
+# env vars
+.env
+
+# dependency tree
 deptree.txt
