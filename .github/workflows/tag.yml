@@ -22,8 +22,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ env.python-version }}
@@ -55,8 +53,7 @@ jobs:
         run: pytest
       - name: Push commit and tag
         if: |
-          !contains(github.event.pull_request.title, '[no tag]')
-          || !contains(github.event.pull_request.title, '[skip tag]')
+          !(contains(github.event.pull_request.title, '[no tag]') || contains(github.event.pull_request.title, '[skip tag]'))
         run: |
           # Git config
           git config user.name "GitHub Actions"
@@ -72,8 +69,7 @@ jobs:
           echo "CURRENT_VERSION=$tag" >> $GITHUB_ENV
       - name: Triggers downstream dependencies
         if: |
-          !contains(github.event.pull_request.title, '[no tag]')
-          || !contains(github.event.pull_request.title, '[skip tag]')
+          !(contains(github.event.pull_request.title, '[no tag]') || contains(github.event.pull_request.title, '[skip tag]'))
         run: gh workflow run bump.yml --repo ominatechnologies/jai_lib --ref main -f branch_name=${{ github.head_ref }} -f tag=${{ env.CURRENT_VERSION }} -f sender=${{ github.event.repository.name }}
         env:
           GH_TOKEN: ${{ secrets.GIT_PAT }}
