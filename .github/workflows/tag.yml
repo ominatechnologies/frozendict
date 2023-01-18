@@ -18,7 +18,7 @@ jobs:
     env:
       python-version: "3.9"
 
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged
 
     steps:
       - uses: actions/checkout@v3
