@@ -15,12 +15,61 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      python-version: "3.9"
 
     if: github.event.pull_request.merged == true
 
     steps:
-      - uses: ominatechnologies/actions/tag@main
+      - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GIT_PAT }}
-          mypy: src tests
-          triggers: jai_lib
+          persist-credentials: false
+      - uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.python-version }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - name: Cache python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements.dev.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('requirements.txt') }}-
+            ${{ runner.os }}-${{ env.python-version }}-
+      - name: Install tools and requirements
+        run: |
+          pip install -U pip
+          pip install -U setuptools wheel pre-commit bumpver
+          pip install -r requirements.dev.txt .
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: pre-commit-${{ runner.os }}-${{ env.python-version }}-
+      - name: Run pre-commit
+        run: pre-commit run --show-diff-on-failure --color=always --all-files
+      - name: Run Mypy
+        run: mypy src tests
+      - name: Run Pytest
+        run: pytest
+      - name: Push commit and tag
+        if: contains(github.event.pull_request.title, '[no tag]') == 'false' && contains(github.event.pull_request.title, '[skip tag]') == 'false'
+        run: |
+          # Git config
+          git config user.name "GitHub Actions"
+          git config user.email "scott.tiger@ominatechnologies.com"
+
+          # Latest change
+          git fetch origin main
+          git reset --hard origin/main
+
+          # Tag and its message
+          bumpver update -n
+          tag=$(git show -s --format=%s | cut -c 16-)
+          echo "CURRENT_VERSION=$tag" >> $GITHUB_ENV
+      - name: Triggers downstream dependencies
+        if: contains(github.event.pull_request.title, '[no tag]') == 'false' && contains(github.event.pull_request.title, '[skip tag]') == 'false'
+        run: gh workflow run bump.yml --repo ominatechnologies/jai_lib --ref main -f branch_name=${{ github.head_ref }} -f tag=${{ env.CURRENT_VERSION }} -f sender=${{ github.event.repository.name }}
+        env:
+          GH_TOKEN: ${{ secrets.GIT_PAT }}
