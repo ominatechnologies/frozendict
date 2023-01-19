@@ -15,7 +15,7 @@ def test_init_1():
 
 
 def test_init_3():
-    fd = FrozenDict({})
+    fd: AbstractDict = FrozenDict({})
     assert isinstance(fd, FrozenDict)
     assert isinstance(fd, AbstractDict)
     assert isinstance(fd, Mapping)
@@ -50,11 +50,11 @@ def test_init_8():
 def test_init_non_dict():
     with raises(TypeError):
         # noinspection PyTypeChecker
-        FrozenDict({"1", "0"})
+        FrozenDict({"1", "0"})  # type: ignore
 
     with raises(TypeError):
         # noinspection PyTypeChecker
-        FrozenDict({1, 0})
+        FrozenDict({1, 0})  # type: ignore
 
 
 def test_init_homogeneous():
@@ -73,27 +73,27 @@ def test_init_kwargs():
     assert fd.keys() == {"k_1"}
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=1)
+    fd = FrozenDict(k_1=0, k_2=1)
     assert fd.keys() == {"k_1", "k_2"}
     assert fd.get("k_1") == 0
     assert fd.get("k_2") == 1
 
-    fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=1)
+    fd = FrozenDict(k_1=0, k_2=1)
     assert fd.keys() == {"k_1", "k_2"}
     assert fd.get("k_1") == 0
     assert fd.get("k_2") == 1
 
-    fd: FrozenDict[str, Union[int, str]] = FrozenDict(k_1=0, k_2="1")
-    assert fd.keys() == {"k_1", "k_2"}
-    assert fd.get("k_1") == 0
-    assert fd.get("k_2") == "1"
+    fd1: FrozenDict[str, Union[int, str]] = FrozenDict(k_1=0, k_2="1")
+    assert fd1.keys() == {"k_1", "k_2"}
+    assert fd1.get("k_1") == 0
+    assert fd1.get("k_2") == "1"
 
-    fd: FrozenDict[str, Dict[str, int]] = FrozenDict(
+    fd2: FrozenDict[str, Dict[str, int]] = FrozenDict(
         k_1=frozendict({"k_1": 0, "k_2": 1}), k_2=frozendict({"k_3": 2, "k_4": 3})
     )
-    assert fd.keys() == {"k_1", "k_2"}
-    assert fd.get("k_1") == {"k_1": 0, "k_2": 1}
-    assert fd.get("k_2") == {"k_3": 2, "k_4": 3}
+    assert fd2.keys() == {"k_1", "k_2"}
+    assert fd2.get("k_1") == {"k_1": 0, "k_2": 1}
+    assert fd2.get("k_2") == {"k_3": 2, "k_4": 3}
 
     with raises(TypeError):
         FrozenDict(k_1={"k_1": 0, "k_2": 1}, k_2={"k_3": 2, "k_4": 3})
@@ -104,25 +104,23 @@ def test_init_no_none_value():
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict(
-        {"k_1": 0, "k_2": None}, remove_none_values=True
+    fd = FrozenDict({"k_1": 0, "k_2": None}, remove_none_values=True)  # type: ignore
+    assert len(fd) == 1
+    assert fd.get("k_1") == 0
+
+    fd = FrozenDict(
+        {"k_1": 0, "k_2": None},  # type: ignore
+        remove_none_values=True,
+        homogeneous_type=True,
     )
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict(
-        {"k_1": 0, "k_2": None}, remove_none_values=True, homogeneous_type=True
-    )
+    fd = FrozenDict(k_1=0, k_2=None, remove_none_values=True)
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
-    fd: FrozenDict[str, int] = FrozenDict(k_1=0, k_2=None, remove_none_values=True)
-    assert len(fd) == 1
-    assert fd.get("k_1") == 0
-
-    fd: FrozenDict[str, int] = FrozenDict(
-        k_1=0, k_2=None, remove_none_values=True, homogeneous_type=True
-    )
+    fd = FrozenDict(k_1=0, k_2=None, remove_none_values=True, homogeneous_type=True)
     assert len(fd) == 1
     assert fd.get("k_1") == 0
 
@@ -187,13 +185,13 @@ def test_immutable():
 
     fd_1: FrozenDict[str, int] = frozendict({"k_1": 0, "k_2": 1})
     d_2 = {"k_3": fd_1}
-    fd: FrozenDict[str, FrozenDict[str, int]] = FrozenDict(d_2)
-    assert fd.get("k_3").get("k_1") == 0
+    ffd = FrozenDict(d_2)
+    assert ffd.get("k_3").get("k_1") == 0  # type: ignore
 
     fd_1 = frozendict({"k_1": 0, "k_2": 1})
     fd_2 = frozendict({"k_1": 1})
-    fd: FrozenDict[str, Dict[str, int]] = FrozenDict(k_1=fd_1, k_2=fd_2)
-    assert fd.get("k_1").get("k_1") == 0
+    fffd: FrozenDict[str, Dict[str, int]] = FrozenDict(k_1=fd_1, k_2=fd_2)
+    assert fffd.get("k_1").get("k_1") == 0  # type: ignore
 
 
 def test_immutable_no_copy():
@@ -219,7 +217,7 @@ def test_immutable_no_copy_1():
     assert isinstance(fd_3, NoCopyFrozenDict)
     assert isinstance(fd_3, FrozenDict)
     assert d.get("k_3") == 3
-    assert fd_3.get("k").get("k_3") == 3
+    assert fd_3.get("k").get("k_3") == 3  # type: ignore
 
 
 def test_typing_1():
