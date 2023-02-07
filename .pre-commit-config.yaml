@@ -1,46 +1,30 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 23.1.0
-    hooks:
-      - id: black
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        exclude: "docs"
-        additional_dependencies:
-          - flake8-bugbear==23.1.20
-          - flake8-comprehensions==3.10.1
-          - flake8-mutable==1.2.0
-          - flake8-print==5.0.0
-          - flake8-quotes==3.3.2
-          - flake8-simplify==0.19.3
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
+      - id: check-added-large-files
+      - id: check-ast
       - id: check-builtin-literals
+      - id: check-byte-order-marker
       - id: check-case-conflict
-      - id: check-docstring-first
       - id: check-executables-have-shebangs
       - id: check-json
       - id: check-merge-conflict
       - id: check-symlinks
       - id: check-toml
       - id: check-yaml
+      - id: debug-statements
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
+      - id: fix-encoding-pragma
+        args: [--remove]
+      - id: forbid-submodules
       - id: mixed-line-ending
-      - id: trailing-whitespace
-      - id: debug-statements
-      - id: requirements-txt-fixer
-      - id: check-added-large-files
       - id: name-tests-test
         args: [--django]
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.10.0
     hooks:
@@ -50,25 +34,25 @@ repos:
       - id: python-no-log-warn
       - id: text-unicode-replacement-char
   - repo: https://github.com/psf/black
-    rev: 22.12.0
+    rev: 23.1.0
     hooks:
       - id: black
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
   - repo: https://github.com/pycqa/flake8
     rev: 6.0.0
     hooks:
       - id: flake8
-        exclude: "docs"
+        exclude: "docs/"
         additional_dependencies:
-          - flake8-bugbear==22.12.6
+          - flake8-bugbear==23.1.20
           - flake8-comprehensions==3.10.1
           - flake8-mutable==1.2.0
           - flake8-print==5.0.0
           - flake8-quotes==3.3.2
           - flake8-simplify==0.19.3
-  - repo: https://github.com/pycqa/isort
-    rev: 5.11.4
-    hooks:
-      - id: isort
   - repo: local
     hooks:
       - id: wrong-pytest-imports
