@@ -70,6 +70,15 @@ jobs:
       - name: Triggers downstream dependencies
         if: |
           !(contains(github.event.pull_request.title, '[no tag]') || contains(github.event.pull_request.title, '[skip tag]'))
-        run: gh workflow run bump.yml --repo ominatechnologies/jai_lib --ref main -f branch_name=${{ github.head_ref }} -f tag=${{ env.CURRENT_VERSION }} -f sender=${{ github.event.repository.name }}
+        run: gh workflow run bump.yml --repo ominatechnologies/jai_lib --ref main -f branch_name=${{ github.head_ref }} -f tag=${{ env.CURRENT_VERSION }} -f sender=${{ github.event.repository.name }} -f actor=${{ github.actor }}
         env:
           GH_TOKEN: ${{ secrets.GIT_PAT }}
+      - name: Notify failure in Slack
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: ${{ vars.TAG_SLACK_CHANNEL }}
+          status: Failed
+          color: danger

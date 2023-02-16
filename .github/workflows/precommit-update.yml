@@ -15,8 +15,47 @@ jobs:
   precommit-update:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      python-version: "3.9"
 
     steps:
-      - uses: ominatechnologies/actions/precommit-update@main
-        with:
-          token: ${{ secrets.GIT_PAT }}
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GIT_PAT }}
+    - name: Checkout branch
+      run: |
+        # Git config
+        git config user.name "GitHub Actions"
+        git config user.email "scott.tiger@ominatechnologies.com"
+        # Fetch latest
+        git fetch -apq
+        # Switch to the branch or create it
+        git checkout -B update-precommit
+        git reset --hard origin/main
+    - uses: actions/setup-python@v3
+      with:
+        python-version: ${{ env.python-version }}
+        cache: pip
+    - uses: actions/cache@v3
+      with:
+        path: ~/.cache/pre-commit
+        key: pre-commit-${{ runner.os }}-${{ env.python-version }}-${{ hashFiles('.pre-commit-config.yaml') }}
+        restore-keys: pre-commit-${{ runner.os }}-${{ env.python-version }}-
+    - name: Install pre-commit and update its dependencies
+      id: update-pre-commit
+      run: |
+        pip install -U pre-commit
+        pre-commit autoupdate
+        change=$(git diff --name-only origin/main | grep -c pre-commit-config)
+        [ $change != 0  ] && git commit -am "chore: Autoupdate pre-commit" && git push -u origin update-precommit
+        echo "state=$change" >> $GITHUB_OUTPUT
+    - name: Create or comment on pull request
+      if: steps.update-pre-commit.outputs.state != 0
+      run: |
+        gh pr create --base main --title "[no tag] Update pre-commit config" --body "Update report
+          - Update pre-commit config
+          - Auto-generated" \
+        && gh pr merge --auto --squash update-precommit \
+        || gh pr comment update-precommit --body "Update pre-commit config"
+      env:
+        GH_TOKEN: ${{ secrets.GIT_PAT }}
