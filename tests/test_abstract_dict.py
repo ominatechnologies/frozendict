@@ -5,7 +5,7 @@ def test_abstract_dict_typing_1():
     dct: AbstractDict[str, str] = {"k_1": "v_1"}
     assert dct["k_1"] == "v_1"
 
-    dct: AbstractDict[str, str] = FrozenDict({"k_1": "v_1"})
+    dct = FrozenDict({"k_1": "v_1"})
     assert dct["k_1"] == "v_1"
 
 
