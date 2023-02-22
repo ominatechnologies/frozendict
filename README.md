@@ -1,4 +1,4 @@
-[![.github/workflows/tag.yml](https://github.com/ominatechnologies/frozendict/actions/workflows/tag.yml/badge.svg)](https://github.com/ominatechnologies/frozendict/actions/workflows/tag.yml)
+[![Tag](https://github.com/ominatechnologies/frozendict/actions/workflows/tag.yml/badge.svg)](https://github.com/ominatechnologies/frozendict/actions/workflows/tag.yml)
 
 # FrozenDict
 
