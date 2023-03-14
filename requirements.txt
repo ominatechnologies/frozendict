@@ -1,1 +1,2 @@
-xxhash==3.0.0
+typing-extensions==4.5.0
+xxhash==3.2.0
